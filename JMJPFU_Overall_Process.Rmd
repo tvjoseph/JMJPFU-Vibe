@@ -1,0 +1,10 @@
+---
+title: "JMJPFU_Vibe"
+output: html_notebook
+---
+
+
+# JMJPFU
+# 3-Feb-2017
+Lord help this venture. This is not my work but yours
+This is the first working file for the Vibe project. 
