@@ -8,3 +8,7 @@ output: html_notebook
 # 3-Feb-2017
 Lord help this venture. This is not my work but yours
 This is the first working file for the Vibe project. 
+
+This file is to define the overall process. This document will be updated regularly to reflect the right process
+
+Lord this is to test the new push command after the creation of remote
