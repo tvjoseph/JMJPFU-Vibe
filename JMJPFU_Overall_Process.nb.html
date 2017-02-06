@@ -180,10 +180,163 @@ $(document).ready(function () {
 <p>Lord help this venture. This is not my work but yours This is the first working file for the Vibe project.</p>
 <p>This file is to define the overall process. This document will be updated regularly to reflect the right process</p>
 <p>Lord this is to test the new push command after the creation of remote</p>
+<div id="jmjpfu-1" class="section level3">
+<h3>JMJPFU</h3>
+</div>
+<div id="feb-2017-1" class="section level3">
+<h3>6-Feb-2017</h3>
+</div>
+<div id="step-1-scrapping-the-web-and-getting-data" class="section level2">
+<h2>Step 1 : Scrapping the web and getting data</h2>
+<p>The first step is to scrap the websites and get data related to hotesl. This data scrapping will be used for creating the training data set and also as a major step in the process.</p>
+<div id="step-1a-loading-the-library-files" class="section level3">
+<h3>Step 1a : Loading the library files</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcblxuYGBgIn0= -->
+<pre class="r"><code>library(dplyr)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog46S847ixZHBseXLjpLzjuLJcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDjpLzjuLFwYWNrYWdlOnN0YXRz46S847iyOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDjpLzjuLFwYWNrYWdlOmJhc2XjpLzjuLI6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuIn0= -->
+<pre><code>
+Attaching package: 㤼㸱dplyr㤼㸲
+
+The following objects are masked from 㤼㸱package:stats㤼㸲:
+
+    filter, lag
+
+The following objects are masked from 㤼㸱package:base㤼㸲:
+
+    intersect, setdiff, setequal, union</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="step-1b-defining-the-url-and-then-scrapping-the-website" class="section level3">
+<h3>Step 1b: Defining the url and then scrapping the website</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p><a href="https://www.tripadvisor.in/Hotel_Review-g304556-d1597314-Reviews-Hilton_Chennai-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS" class="uri">https://www.tripadvisor.in/Hotel_Review-g304556-d1597314-Reviews-Hilton_Chennai-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS</a></p>
+<p>A loop for the above process</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlsdFJldls0NF1cblxuYGBgIn0= -->
+<pre class="r"><code>hiltRev[44]
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiRGVhciBHdWVzdCxcXG5UaGFuayB5b3Ugc28gbXVjaCBmb3Igd3JpdGluZyBhYm91dCB1cyBvbiBUcmlwQWR2aXNvci4gV2UgYXJlIGhhcHB5IHRvIHJlYWQgdGhhdCB5b3UgYW5kIHlvdXIgZmFtaWx5IGhhZCBhIGdyZWF0IHN0YXkgd2l0aCB1cy4gV2UgaG9wZSB0aGF0IHlvdSBhbmQgeW91ciBodXNiYW5kIGVuam95ZWQgb3VyIEhpbHRvbiBCcmVha2Zhc3QgYW5kIGxvb2sgZm9yd2FyZCB0byB3ZWxjb21pbmcgeW91IHNvb24uXFxuUGxlYXNlIGZlZWwgZnJlZSB0byByZWFjaCBvdXQgdG8gbWUgZGlyZWN0bHkgb24gcnViYW4uZGFzQGhpbHRvbi5jb20gZm9yIGFueSBmdXJ0aGVyLi4uXCJcbiJ9 -->
+<pre><code>[1] &quot;Dear Guest,\nThank you so much for writing about us on TripAdvisor. We are happy to read that you and your family had a great stay with us. We hope that you and your husband enjoyed our Hilton Breakfast and look forward to welcoming you soon.\nPlease feel free to reach out to me directly on ruban.das@hilton.com for any further...&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>It seems the odd numbered are usually the guest comments and the even numbered ones the hotel comments. Let try taking only the odd numbered reviews. Let us take only the guest comments first</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaGlsdFJldjFbMTAwMF1cblxuYGBgIn0= -->
+<pre class="r"><code>hiltRev1[1000]
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiSSB3YXMgcmF0aGVyIGFwcHJlaGVuc2l2ZSBvZiBzdGF5aW5nIGF0IHRoaXMgcHJvcGVydHkgYWZ0ZXIgcmVhZGluZyB0aGUgcmV2aWV3cyBvbiBUcmlwYWR2aXNvci4gSG93ZXZlciBiZWluZyBhIEhIIG1lbWJlciwgaSBkZWNpZGVkIHRvIHRha2UgYSBjaGFuY2UuIFRoZSBsb2NhdGlvbiBvZiB0aGUgaG90ZWwgaXMgdmVyeSBkZWNlbnQgLiBUaGUgcm9vbXMgd2VyZSBuaWNlIGFuZCB3ZWxsIGZ1cm5pc2hlZC4gU3RhZmYgd2FzIHBvbGl0ZSBhbmQgaGVscGZ1bC4gVGhlIHJlc3RhdXJhbnRzIGFyZSB2ZXJ5IG5pY2UgYW5kIHNlcnZpY2UgZGVjZW50LiBUaGUgcm9vZnRvcCBiYXIgd2FzIG5pY2UuLi5cIlxuIn0= -->
+<pre><code>[1] &quot;I was rather apprehensive of staying at this property after reading the reviews on Tripadvisor. However being a HH member, i decided to take a chance. The location of the hotel is very decent . The rooms were nice and well furnished. Staff was polite and helpful. The restaurants are very nice and service decent. The rooftop bar was nice...&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+</div>
+<div id="step-2-creating-templates" class="section level2">
+<h2>Step 2 : Creating templates</h2>
+<p>Once the data is obtained, the next task is to create templates for each emotions. The process of creating the templates is as follows</p>
+<ol style="list-style-type: decimal">
+<li>From the existing text, create sets of unigrams, bigrams, trigrams and quadragrams</li>
+<li>Create seperate dataframes for storing these n-grams.</li>
+<li>Once dataframes are created, manaully classify them according to emotions</li>
+<li>Make a baseline templates for various emotions and then keep updating the templates over time</li>
+</ol>
+<div id="step-2a-concatinating-the-text-and-creating-seperate-n-grams" class="section level3">
+<h3>Step 2a : Concatinating the text and creating seperate n-grams</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShuZ3JhbSlcblxuYGBgIn0= -->
+<pre class="r"><code>library(ngram)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDjpLzjuLFuZ3JhbeOkvOO4siB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDMuMy4yXG4ifQ== -->
+<pre><code>package 㤼㸱ngram㤼㸲 was built under R version 3.3.2</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The below code will create the consolidated text of all reviews.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBDcmVhdGluZyBjb25zb2xpZGF0ZWQgdGV4dFxuZm9yKGkgaW4gc2VxKDMsMTEyMSwyKSl7XG4gIFxuICB0ZW1wIDwtIGNvbmNhdGVuYXRlKGhpbHRSZXYxW2ldLGhpbHRSZXYxW2krMV0pXG5cbmhvc1RleHQgPC0gY29uY2F0ZW5hdGUoaG9zVGV4dCx0ZW1wKVxuICBcbn1cblxuXG5cbmBgYCJ9 -->
+<pre class="r"><code># Creating consolidated text
+for(i in seq(3,1121,2)){
+  
+  temp &lt;- concatenate(hiltRev1[i],hiltRev1[i+1])
+
+hosText &lt;- concatenate(hosText,temp)
+  
+}
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Cleaning up the text is the next task. The below function cleans up the text.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2xlYW5zYW1wIDwtIGZ1bmN0aW9uKGNvcnB1cyl7XG4gICNzdHJpcCB3aGl0ZXNwYWNlXG4gIGNvcnB1cyA8LSBnc3ViKFwiXFxcXHMrXCIsXCIgXCIsY29ycHVzKSBcbiAgI3JlbW92ZSBwdW5jdHVhdGlvblxuICBjb3JwdXMgPC0gZ3N1YihcIltbOnB1bmN0Ol1dXCIsIFwiXCIsIGNvcnB1cylcbiAgI3JlbW92ZSBudW1iZXJzXG4gIGNvcnB1cyA8LSBnc3ViKFwiW1s6ZGlnaXQ6XV0rXCIsIFwiXCIsIGNvcnB1cylcbiAgI3JlbW92ZSBwcm9mYW5pdHlcbiAgI2NvcnB1cyA8LSBnc3ViKHggPSBjb3JwdXMsIHBhdHRlcm4gPSBwYXN0ZShwcm9mYW5pdHksIGNvbGxhcHNlID0gXCJ8XCIpLCByZXBsYWNlbWVudCA9IFwiXCIpIFxuICAjbG93ZXJjYXNlXG4gIGNvcnB1cyA8LSB0b2xvd2VyKGNvcnB1cylcbiAgY29ycHVzXG4gIFxuICBcbiAgICAgIH1cbmBgYCJ9 -->
+<pre class="r"><code>cleansamp &lt;- function(corpus){
+  #strip whitespace
+  corpus &lt;- gsub(&quot;\\s+&quot;,&quot; &quot;,corpus) 
+  #remove punctuation
+  corpus &lt;- gsub(&quot;[[:punct:]]&quot;, &quot;&quot;, corpus)
+  #remove numbers
+  corpus &lt;- gsub(&quot;[[:digit:]]+&quot;, &quot;&quot;, corpus)
+  #remove profanity
+  #corpus &lt;- gsub(x = corpus, pattern = paste(profanity, collapse = &quot;|&quot;), replacement = &quot;&quot;) 
+  #lowercase
+  corpus &lt;- tolower(corpus)
+  corpus
+  
+  
+      }</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Running the above function to create the cleaned up text</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubmNoYXIoaG9zQ2xlYW4pXG5cbmBgYCJ9 -->
+<pre class="r"><code>nchar(hosClean)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDMyNzM0M1xuIn0= -->
+<pre><code>[1] 327343</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Creating unigrams from the cleaned up text</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuaG9zVW5pWzE6MTVdXG5cbmBgYCJ9 -->
+<pre class="r"><code>hosUni[1:15]
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiIFsxXSBcInJldmVyYmVyYXRpbmdcIiBcInByZXNlbmNlXCIgICAgICBcIm5hbWluZ1wiICAgICAgICBcIm5ldFwiICAgICAgICAgICBcImFpZFwiICAgICAgICAgICBcInRob3VnaFwiICAgICAgICBcImZpdG5lc3NcIiAgICAgIFxuIFs4XSBcInNwZWNpaWFseVwiICAgICBcInN0ZXBcIiAgICAgICAgICBcInRyYW5zbGF0ZVwiICAgICBcImZld1wiICAgICAgICAgICBcImJlYWNoZXNcIiAgICAgICBcIm5vd1wiICAgICAgICAgICBcImFncmVlXCIgICAgICAgIFxuWzE1XSBcImRvZXNudFwiICAgICAgIFxuIn0= -->
+<pre><code> [1] &quot;reverberating&quot; &quot;presence&quot;      &quot;naming&quot;        &quot;net&quot;           &quot;aid&quot;           &quot;though&quot;        &quot;fitness&quot;      
+ [8] &quot;speciialy&quot;     &quot;step&quot;          &quot;translate&quot;     &quot;few&quot;           &quot;beaches&quot;       &quot;now&quot;           &quot;agree&quot;        
+[15] &quot;doesnt&quot;       </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
+</div>
+</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpNSlBGVV9WaWJlIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQojIEpNSlBGVQ0KIyAzLUZlYi0yMDE3DQpMb3JkIGhlbHAgdGhpcyB2ZW50dXJlLiBUaGlzIGlzIG5vdCBteSB3b3JrIGJ1dCB5b3Vycw0KVGhpcyBpcyB0aGUgZmlyc3Qgd29ya2luZyBmaWxlIGZvciB0aGUgVmliZSBwcm9qZWN0LiANCg0KVGhpcyBmaWxlIGlzIHRvIGRlZmluZSB0aGUgb3ZlcmFsbCBwcm9jZXNzLiBUaGlzIGRvY3VtZW50IHdpbGwgYmUgdXBkYXRlZCByZWd1bGFybHkgdG8gcmVmbGVjdCB0aGUgcmlnaHQgcHJvY2Vzcw0KDQpMb3JkIHRoaXMgaXMgdG8gdGVzdCB0aGUgbmV3IHB1c2ggY29tbWFuZCBhZnRlciB0aGUgY3JlYXRpb24gb2YgcmVtb3RlDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpNSlBGVV9WaWJlIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KDQojIEpNSlBGVQ0KIyAzLUZlYi0yMDE3DQpMb3JkIGhlbHAgdGhpcyB2ZW50dXJlLiBUaGlzIGlzIG5vdCBteSB3b3JrIGJ1dCB5b3Vycw0KVGhpcyBpcyB0aGUgZmlyc3Qgd29ya2luZyBmaWxlIGZvciB0aGUgVmliZSBwcm9qZWN0LiANCg0KVGhpcyBmaWxlIGlzIHRvIGRlZmluZSB0aGUgb3ZlcmFsbCBwcm9jZXNzLiBUaGlzIGRvY3VtZW50IHdpbGwgYmUgdXBkYXRlZCByZWd1bGFybHkgdG8gcmVmbGVjdCB0aGUgcmlnaHQgcHJvY2Vzcw0KDQpMb3JkIHRoaXMgaXMgdG8gdGVzdCB0aGUgbmV3IHB1c2ggY29tbWFuZCBhZnRlciB0aGUgY3JlYXRpb24gb2YgcmVtb3RlDQoNCiMjIyBKTUpQRlUNCiMjIyA2LUZlYi0yMDE3DQoNCiMjIFN0ZXAgMSA6IFNjcmFwcGluZyB0aGUgd2ViIGFuZCBnZXR0aW5nIGRhdGENCg0KDQpUaGUgZmlyc3Qgc3RlcCBpcyB0byBzY3JhcCB0aGUgd2Vic2l0ZXMgYW5kIGdldCBkYXRhIHJlbGF0ZWQgdG8gaG90ZXNsLiBUaGlzIGRhdGEgc2NyYXBwaW5nIHdpbGwgYmUgdXNlZCBmb3IgY3JlYXRpbmcgdGhlIHRyYWluaW5nIGRhdGEgc2V0IGFuZCBhbHNvIGFzIGEgbWFqb3Igc3RlcCBpbiB0aGUgcHJvY2Vzcy4NCg0KIyMjIFN0ZXAgMWEgOiBMb2FkaW5nIHRoZSBsaWJyYXJ5IGZpbGVzDQoNCg0KYGBge3J9DQpsaWJyYXJ5KHJ2ZXN0KQ0KbGlicmFyeShkcGx5cikNCg0KYGBgDQoNCiMjIyBTdGVwIDFiOiBEZWZpbmluZyB0aGUgdXJsIGFuZCB0aGVuIHNjcmFwcGluZyB0aGUgd2Vic2l0ZQ0KDQpgYGB7cn0NCiMgSGlsdG9uIENoZW5uYWkNCg0KdXJsIDwtIHBhc3RlMCgiaHR0cHM6Ly93d3cudHJpcGFkdmlzb3IuaW4vU2hvd1VzZXJSZXZpZXdzLWczMDQ1NTYtZDE1OTczMTQtcjQ0NTAwMTkwMi1IaWx0b25fQ2hlbm5haS1DaGVubmFpX01hZHJhc19DaGVubmFpX0Rpc3RyaWN0X1RhbWlsX05hZHUuaHRtbCNDSEVDS19SQVRFU19DT05UIikNCg0KdXJsMSA8LSBwYXN0ZTAoImh0dHBzOi8vd3d3LnRyaXBhZHZpc29yLmluL0hvdGVsX1Jldmlldy1nMzA0NTU2LWQxNTk3MzE0LVJldmlld3Mtb3IyMC1IaWx0b25fQ2hlbm5haS1DaGVubmFpX01hZHJhc19DaGVubmFpX0Rpc3RyaWN0X1RhbWlsX05hZHUuaHRtbCNSRVZJRVdTIikNCg0KY2hlbkhpbHRvbiA8LSByZWFkX2h0bWwodXJsKQ0KDQpoaWx0UmV2IDwtIGNoZW5IaWx0b24gJT4lIGh0bWxfbm9kZXMoIi5wYXJ0aWFsX2VudHJ5IikgJT4lIGh0bWxfdGV4dCgpDQoNCmhpbHRSZXYxIDwtIGNoZW5IaWx0b24gJT4lIGh0bWxfbm9kZXMoIi5wYXJ0aWFsX2VudHJ5IikgJT4lIGh0bWxfdGV4dCgpDQoNCg0KaGlsdFJldiA8LSB1bmxpc3QoaGlsdFJldixoaWx0UmV2MSkgIyBUbyBjcmVhdGUgYSBjb21iaW5lZCBsaXN0DQoNCg0KDQpgYGANCg0KDQpodHRwczovL3d3dy50cmlwYWR2aXNvci5pbi9Ib3RlbF9SZXZpZXctZzMwNDU1Ni1kMTU5NzMxNC1SZXZpZXdzLUhpbHRvbl9DaGVubmFpLUNoZW5uYWlfTWFkcmFzX0NoZW5uYWlfRGlzdHJpY3RfVGFtaWxfTmFkdS5odG1sI1JFVklFV1MNCg0KQSBsb29wIGZvciB0aGUgYWJvdmUgcHJvY2Vzcw0KDQpgYGB7cn0NCg0KZm9yKGkgaW4gc2VxKDIwLDExNDAsMTApKXsNCiAgDQogICMgQ3JlYXRpbmcgdGhlIFVSTCB3aGljaCBsb29wcyBvdmVyIGVhY2ggcGFnZQ0KICANCiAgdXJsIDwtIHBhc3RlMCgiaHR0cHM6Ly93d3cudHJpcGFkdmlzb3IuaW4vSG90ZWxfUmV2aWV3LWczMDQ1NTYtZDE1OTczMTQtUmV2aWV3cy1vciIsaSwiLUhpbHRvbl9DaGVubmFpLUNoZW5uYWlfTWFkcmFzX0NoZW5uYWlfRGlzdHJpY3RfVGFtaWxfTmFkdS5odG1sI1JFVklFV1MiKQ0KICANCiAgIyBSZWFkaW5nIHRoZSBVUkwgZGF0YSB1c2luZyB0aGUgcGFja2FnZQ0KICANCiAgY2hlbkhpbHRvbiA8LSByZWFkX2h0bWwodXJsKQ0KICANCiAgIyBFeHRyYWN0aW5nIHRoZSB0ZXh0DQoNCnRlbXAgPC0gY2hlbkhpbHRvbiAlPiUgaHRtbF9ub2RlcygiLnBhcnRpYWxfZW50cnkiKSAlPiUgaHRtbF90ZXh0KCkNCg0KIyBDb25zb2xpZGF0aW5nIHRoZSB0ZXh0DQoNCmhpbHRSZXYgPC0gbGlzdChoaWx0UmV2LHRlbXApICMgVG8gY3JlYXRlIGEgY29tYmluZWQgbGlzdA0KDQpoaWx0UmV2IDwtIHVubGlzdChoaWx0UmV2KQ0KICANCn0NCg0KaGlsdFJldls0NF0NCmBgYA0KDQpJdCBzZWVtcyB0aGUgb2RkIG51bWJlcmVkIGFyZSB1c3VhbGx5IHRoZSBndWVzdCBjb21tZW50cyBhbmQgdGhlIGV2ZW4gbnVtYmVyZWQgb25lcyB0aGUgaG90ZWwgY29tbWVudHMuIExldCB0cnkgdGFraW5nIG9ubHkgdGhlIG9kZCBudW1iZXJlZCByZXZpZXdzLiBMZXQgdXMgdGFrZSBvbmx5IHRoZSBndWVzdCBjb21tZW50cyBmaXJzdA0KDQpgYGB7cn0NCg0KIyBHdWVzdCBjb21tZW50cw0KZm9yKGkgaW4gc2VxKDM5LDIyODEsMikpew0KICANCiAgdGVtcCA8LSBoaWx0UmV2W2ldDQogIA0KICBoaWx0UmV2MSA8LSBsaXN0KGhpbHRSZXYxLHRlbXApDQogIA0KICBoaWx0UmV2MSA8LSB1bmxpc3QoaGlsdFJldjEpDQogIA0KfQ0KDQpoaWx0UmV2MVsxMDAwXQ0KDQpgYGANCg0KIyMgU3RlcCAyIDogQ3JlYXRpbmcgdGVtcGxhdGVzDQoNCk9uY2UgdGhlIGRhdGEgaXMgb2J0YWluZWQsIHRoZSBuZXh0IHRhc2sgaXMgdG8gY3JlYXRlIHRlbXBsYXRlcyBmb3IgZWFjaCBlbW90aW9ucy4gVGhlIHByb2Nlc3Mgb2YgY3JlYXRpbmcgdGhlIHRlbXBsYXRlcyBpcyBhcyBmb2xsb3dzDQoNCjEuIEZyb20gdGhlIGV4aXN0aW5nIHRleHQsIGNyZWF0ZSBzZXRzIG9mIHVuaWdyYW1zLCBiaWdyYW1zLCB0cmlncmFtcyBhbmQgcXVhZHJhZ3JhbXMNCjIuIENyZWF0ZSBzZXBlcmF0ZSBkYXRhZnJhbWVzIGZvciBzdG9yaW5nIHRoZXNlIG4tZ3JhbXMuDQozLiBPbmNlIGRhdGFmcmFtZXMgYXJlIGNyZWF0ZWQsIG1hbmF1bGx5IGNsYXNzaWZ5IHRoZW0gYWNjb3JkaW5nIHRvIGVtb3Rpb25zDQo0LiBNYWtlIGEgYmFzZWxpbmUgdGVtcGxhdGVzIGZvciB2YXJpb3VzIGVtb3Rpb25zIGFuZCB0aGVuIGtlZXAgdXBkYXRpbmcgdGhlIHRlbXBsYXRlcyBvdmVyIHRpbWUNCg0KDQojIyMgU3RlcCAyYSA6IENvbmNhdGluYXRpbmcgdGhlIHRleHQgYW5kIGNyZWF0aW5nIHNlcGVyYXRlIG4tZ3JhbXMNCg0KYGBge3J9DQpsaWJyYXJ5KHJ2ZXN0KQ0KbGlicmFyeShkcGx5cikNCmxpYnJhcnkodG0pDQpsaWJyYXJ5KG5ncmFtKQ0KbGlicmFyeShzdHJpbmdyKQ0KbGlicmFyeSh3b3JkY2xvdWQpDQpgYGANCg0KVGhlIGJlbG93IGNvZGUgd2lsbCBjcmVhdGUgdGhlIGNvbnNvbGlkYXRlZCB0ZXh0IG9mIGFsbCByZXZpZXdzLg0KDQoNCmBgYHtyfQ0KIyBDcmVhdGluZyBjb25zb2xpZGF0ZWQgdGV4dA0KZm9yKGkgaW4gc2VxKDMsMTEyMSwyKSl7DQogIA0KICB0ZW1wIDwtIGNvbmNhdGVuYXRlKGhpbHRSZXYxW2ldLGhpbHRSZXYxW2krMV0pDQoNCmhvc1RleHQgPC0gY29uY2F0ZW5hdGUoaG9zVGV4dCx0ZW1wKQ0KICANCn0NCg0KDQoNCmBgYA0KDQpDbGVhbmluZyB1cCB0aGUgdGV4dCBpcyB0aGUgbmV4dCB0YXNrLiBUaGUgYmVsb3cgZnVuY3Rpb24gY2xlYW5zIHVwIHRoZSB0ZXh0Lg0KDQpgYGB7cn0NCmNsZWFuc2FtcCA8LSBmdW5jdGlvbihjb3JwdXMpew0KICAjc3RyaXAgd2hpdGVzcGFjZQ0KICBjb3JwdXMgPC0gZ3N1YigiXFxzKyIsIiAiLGNvcnB1cykgDQogICNyZW1vdmUgcHVuY3R1YXRpb24NCiAgY29ycHVzIDwtIGdzdWIoIltbOnB1bmN0Ol1dIiwgIiIsIGNvcnB1cykNCiAgI3JlbW92ZSBudW1iZXJzDQogIGNvcnB1cyA8LSBnc3ViKCJbWzpkaWdpdDpdXSsiLCAiIiwgY29ycHVzKQ0KICAjcmVtb3ZlIHByb2Zhbml0eQ0KICAjY29ycHVzIDwtIGdzdWIoeCA9IGNvcnB1cywgcGF0dGVybiA9IHBhc3RlKHByb2Zhbml0eSwgY29sbGFwc2UgPSAifCIpLCByZXBsYWNlbWVudCA9ICIiKSANCiAgI2xvd2VyY2FzZQ0KICBjb3JwdXMgPC0gdG9sb3dlcihjb3JwdXMpDQogIGNvcnB1cw0KICANCiAgDQogICAgICB9DQpgYGANCg0KUnVubmluZyB0aGUgYWJvdmUgZnVuY3Rpb24gdG8gY3JlYXRlIHRoZSBjbGVhbmVkIHVwIHRleHQNCg0KYGBge3J9DQpob3NDbGVhbiA8LSBjbGVhbnNhbXAoaG9zVGV4dCkNCg0KbmNoYXIoaG9zQ2xlYW4pDQpgYGANCg0KDQpDcmVhdGluZyB1bmlncmFtcyBmcm9tIHRoZSBjbGVhbmVkIHVwIHRleHQNCg0KYGBge3J9DQpob3NVbmkgPC0gZ2V0Lm5ncmFtcyhuZ3JhbShob3NDbGVhbixuPTEpKQ0KDQpob3NVbmlbMToxNV0NCmBgYA0KDQoNCg0K</div>
 
 
 

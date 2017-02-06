@@ -12,3 +12,171 @@ This is the first working file for the Vibe project.
 This file is to define the overall process. This document will be updated regularly to reflect the right process
 
 Lord this is to test the new push command after the creation of remote
+
+### JMJPFU
+### 6-Feb-2017
+
+## Step 1 : Scrapping the web and getting data
+
+
+The first step is to scrap the websites and get data related to hotesl. This data scrapping will be used for creating the training data set and also as a major step in the process.
+
+### Step 1a : Loading the library files
+
+
+```{r}
+library(rvest)
+library(dplyr)
+
+```
+
+### Step 1b: Defining the url and then scrapping the website
+
+```{r}
+# Hilton Chennai
+
+url <- paste0("https://www.tripadvisor.in/ShowUserReviews-g304556-d1597314-r445001902-Hilton_Chennai-Chennai_Madras_Chennai_District_Tamil_Nadu.html#CHECK_RATES_CONT")
+
+url1 <- paste0("https://www.tripadvisor.in/Hotel_Review-g304556-d1597314-Reviews-or20-Hilton_Chennai-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS")
+
+chenHilton <- read_html(url)
+
+hiltRev <- chenHilton %>% html_nodes(".partial_entry") %>% html_text()
+
+hiltRev1 <- chenHilton %>% html_nodes(".partial_entry") %>% html_text()
+
+
+hiltRev <- unlist(hiltRev,hiltRev1) # To create a combined list
+
+
+
+```
+
+
+https://www.tripadvisor.in/Hotel_Review-g304556-d1597314-Reviews-Hilton_Chennai-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS
+
+A loop for the above process
+
+```{r}
+
+for(i in seq(20,1140,10)){
+  
+  # Creating the URL which loops over each page
+  
+  url <- paste0("https://www.tripadvisor.in/Hotel_Review-g304556-d1597314-Reviews-or",i,"-Hilton_Chennai-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS")
+  
+  # Reading the URL data using the package
+  
+  chenHilton <- read_html(url)
+  
+  # Extracting the text
+
+temp <- chenHilton %>% html_nodes(".partial_entry") %>% html_text()
+
+# Consolidating the text
+
+hiltRev <- list(hiltRev,temp) # To create a combined list
+
+hiltRev <- unlist(hiltRev)
+  
+}
+
+hiltRev[44]
+```
+
+It seems the odd numbered are usually the guest comments and the even numbered ones the hotel comments. Let try taking only the odd numbered reviews. Let us take only the guest comments first
+
+```{r}
+
+# Guest comments
+for(i in seq(39,2281,2)){
+  
+  temp <- hiltRev[i]
+  
+  hiltRev1 <- list(hiltRev1,temp)
+  
+  hiltRev1 <- unlist(hiltRev1)
+  
+}
+
+hiltRev1[1000]
+
+```
+
+## Step 2 : Creating templates
+
+Once the data is obtained, the next task is to create templates for each emotions. The process of creating the templates is as follows
+
+1. From the existing text, create sets of unigrams, bigrams, trigrams and quadragrams
+2. Create seperate dataframes for storing these n-grams.
+3. Once dataframes are created, manaully classify them according to emotions
+4. Make a baseline templates for various emotions and then keep updating the templates over time
+
+
+### Step 2a : Concatinating the text and creating seperate n-grams
+
+```{r}
+library(rvest)
+library(dplyr)
+library(tm)
+library(ngram)
+library(stringr)
+library(wordcloud)
+```
+
+The below code will create the consolidated text of all reviews.
+
+
+```{r}
+# Creating consolidated text
+for(i in seq(3,1121,2)){
+  
+  temp <- concatenate(hiltRev1[i],hiltRev1[i+1])
+
+hosText <- concatenate(hosText,temp)
+  
+}
+
+
+
+```
+
+Cleaning up the text is the next task. The below function cleans up the text.
+
+```{r}
+cleansamp <- function(corpus){
+  #strip whitespace
+  corpus <- gsub("\\s+"," ",corpus) 
+  #remove punctuation
+  corpus <- gsub("[[:punct:]]", "", corpus)
+  #remove numbers
+  corpus <- gsub("[[:digit:]]+", "", corpus)
+  #remove profanity
+  #corpus <- gsub(x = corpus, pattern = paste(profanity, collapse = "|"), replacement = "") 
+  #lowercase
+  corpus <- tolower(corpus)
+  corpus
+  
+  
+      }
+```
+
+Running the above function to create the cleaned up text
+
+```{r}
+hosClean <- cleansamp(hosText)
+
+nchar(hosClean)
+```
+
+
+Creating unigrams from the cleaned up text
+
+```{r}
+hosUni <- get.ngrams(ngram(hosClean,n=1))
+
+hosUni[1:15]
+```
+
+
+
