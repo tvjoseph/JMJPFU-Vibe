@@ -170,13 +170,38 @@ nchar(hosClean)
 ```
 
 
-Creating unigrams from the cleaned up text
+Creating unigrams,bigrams, trigrams and quadragrams from the cleaned up text
 
 ```{r}
 hosUni <- get.ngrams(ngram(hosClean,n=1))
+hosBi <- get.ngrams(ngram(hosClean,n=2))
+hosTri <- get.ngrams(ngram(hosClean,n=3))
+hosQuad <- get.ngrams(ngram(hosClean,n=4))
 
-hosUni[1:15]
 ```
 
+Once the n-grams are created, the next task is to go through the n grams manually and classify them.
+
+```{r}
+
+hosUni <- data.frame(hosUni)
+hosUni$Class <- 0
+
+hosBi <- data.frame(hosBi)
+hosBi$Class <- 0
+
+hosTri <- data.frame(hosTri)
+hosTri$Class <- 0
+
+hosQuad <- data.frame(hosQuad)
+hosQuad$Class <- 0
+
+```
+
+Let us write the n-grams into a csv format and then mechanically classify the same
+
+```{r}
+write.csv(hosQuad,"hosQuad.csv")
+```
 
 
