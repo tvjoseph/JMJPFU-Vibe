@@ -1,0 +1,130 @@
+---
+title: "JMJPFU-Word Association"
+output: html_notebook
+---
+
+# JMJPFU
+### 7-Feb-2017
+
+This notebook is to demonstrate various methods of word association which will be used for text analytics. The process we will use is the following
+
+1. Take a text for a particular sentiment, say anger
+2. Find the most frequent words within the text
+3. Find the most frequent associations for the given word for the text
+4. Create templates based on these frequent words and word associations
+
+### Reference Link : http://www.rdatamining.com/examples/text-mining
+
+
+### Initial tasks : Loading the library files
+
+```{r}
+library(tm)
+
+```
+
+### Step1 : Pick the list of text which are relevant to the sentiment (Satisfaction)
+
+The text will be picked from the list called hiltRev1 which was created on 6-Feb-2017
+
+Let us pick the following texts , 11:30
+
+```{r}
+hiltSatisfaction <- hiltRev1[11:30]
+```
+
+### Step2 : Transforming the text into a dataframe for further analysis
+
+```{r}
+# Converting all the list elements to a dataframe
+hiltSatisfacDf <- do.call("rbind",lapply(hiltSatisfaction,as.data.frame))
+# Converting the factors to character
+hiltSatisfacDf <- data.frame(lapply(hiltSatisfacDf,as.character),stringsAsFactors = FALSE)
+# Providing a name to the text column
+names(hiltSatisfacDf) <- "text"
+```
+
+### Step3 : Building a corpus of documents :
+Requirement ; tm library
+
+The next task is to build a corpus of documents for further analysis.
+
+```{r}
+hiltSatCorp <- Corpus(VectorSource(hiltSatisfacDf$text))
+```
+
+### Step4 : Transforming and cleaning the corpus:
+
+The next task is to clean the corpus by removing punctuations, stopwords, numbers, changing to lower case , stemming etc
+
+```{r}
+# Converting to lowercase
+hiltSatCorp <- tm_map(hiltSatCorp,tolower) # Another method for tolower is by applying content_transform. However it is seen to have problems in term document matrix later on
+
+# Remove punctuations
+hiltSatCorp <- tm_map(hiltSatCorp,removePunctuation)
+# Remove numbers
+hiltSatCorp <- tm_map(hiltSatCorp,removeNumbers)
+# Removing stopwords
+hiltSatCorp <- tm_map(hiltSatCorp,removeWords,stopwords('english'))
+
+inspect(hiltSatCorp[1:3])
+
+
+```
+
+Next is to go for stemming of words which require the following packages
+
+```{r}
+library(SnowballC)
+library(RWeka)
+library(rJava)
+library(RWekajars)
+```
+
+Proceeding with the stemming activities
+
+```{r}
+# Creating a dictionary so that words look same after stemming
+dictSatis <- hiltSatCorp
+
+# Doing the stemming
+
+hiltSatCorp <- tm_map(hiltSatCorp,stemDocument)
+
+# Stem Completions # This did not work
+
+
+
+#hiltSatCorp <- tm_map(hiltSatCorp,stemCompletion,dictionary=dictSatis) # This command had error in it . Will explore later
+
+```
+
+### Step 5 : Building the Term Document Matrix
+
+The next task is to build the term document matrix and check for frequency of words
+
+```{r}
+hiltSatCorp <- tm_map(hiltSatCorp, PlainTextDocument)
+
+inspect(hiltSatCorp[1:3])
+
+hiltSatCorp <- Corpus(VectorSource(hiltSatCorp))
+
+hiltDtm <- TermDocumentMatrix(hiltSatCorp)
+
+inspect(hiltDtm[1:10,1:20])
+
+```
+
+```{r}
+findFreqTerms(hiltDtm, lowfreq=5)
+
+# which words are associated with hilton?
+findAssocs(hiltDtm, 'hilton', 0.30)
+
+# which words are associated with hospitality?
+findAssocs(hiltDtm, 'hospitality', 0.30)
+
+```
+
