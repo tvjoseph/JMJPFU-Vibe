@@ -128,3 +128,47 @@ findAssocs(hiltDtm, 'hospitality', 0.30)
 
 ```
 
+# JMJPFU
+## 8-Feb-2017
+
+1. Let us now create a wordcloud and look at the most frequent words.
+2. Also will convert the term document into a matrix format
+
+```{r}
+library(wordcloud)
+
+# First create a matrix out of the Term Document Matrix
+m <- as.matrix(hiltDtm) 
+
+v <- sort(rowSums(m), decreasing=TRUE)
+myNames <- names(v)
+
+d <- data.frame(word=myNames, freq=v)
+wordcloud(d$word, d$freq, min.freq=3)
+d
+
+```
+Let us now find some association with some key words
+
+```{r}
+
+findAssocs(hiltDtm, 'food',0.30)
+
+```
+```{r}
+hiltSatisfacDf[20,1]
+```
+
+So from a modelling perspective we can use many of the methods for extracting features from the data. Here are some of the suggestions
+
+1. Word associations can be used for template creation. Take each of the variables of a hotel like Room, Restaurant, Pickup, cleanliness etc and then find their associations. Classify the associations as "anger","satisfied" etc for the associations. So when a new text is received, analyse them against the template and then enter them as a feature.
+
+2. Second thing which can be explored is the vector space models. We can create each template as Vector Space models and look for similarity with these VSMs for new data and the similarity can be made into a feature.
+
+A link to try out
+
+https://www.kaggle.com/lrargerich/crowdflower-search-relevance/r-vector-space-model/output
+
+A good document on Paradigmatic and syntigmatic associations
+
+http://www.aclweb.org/anthology/C02-1007
