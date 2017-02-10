@@ -204,4 +204,21 @@ Let us write the n-grams into a csv format and then mechanically classify the sa
 write.csv(hosQuad,"hosQuad.csv")
 ```
 
+### JMJPFU
+### 10-Feb-2017
+
+Let us now implement the vector similarity concepts. The below are the tasks which needs to be done.
+
+1. Make a list of charachteristics which are associated with a hotel. For example
+  Room, Food, Restaurant, Staff, Lobby, Reception, Transfer, Facilities, Cleanliness, Recommend etc
+  
+2. For each of the charachteristics make a template for each emotion
+  Satisfied, Delighted, OK, Frustrated, Angry, Sue etc
+3. The template for each charachteristic-emotion combiation will be the most common associated words and its frequencies.
+4. For making the template, different samples of data for each charachteristic-emotion pair is identified and an average frequency score is computed.
+5. Once the templates are ready, training data has to be prepared. Features have to be extracted based on the charachteristic-emotion combination pair and its similarity vector with each of the template.
+6. Any new data set will first have to be converted to the above set of features and then prediction of the probability of emotions will have to be done.
+7. We should also think about prediction at the charachteristic level
+
+Let us now implement one by one each of the above ideas in seperate seperate notebooks.
 

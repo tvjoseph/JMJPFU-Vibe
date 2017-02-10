@@ -1,0 +1,81 @@
+---
+title: "JMJPFU-SatisfiedTemplate"
+output: html_notebook
+---
+
+# JMJPFU
+### 10-Feb-2017
+
+This is the process for creation of a template. Let us start with Satisfied
+
+
+### Initial tasks : Setting up the library files
+
+```{r}
+
+library(SnowballC)
+library(RWeka)
+library(rJava)
+library(RWekajars)
+library(tm)
+```
+
+
+### Step 1 : Getting the relevant data from the Data set
+
+This process entails getting the relevant data from the text data which has already been scrapped from the web. Reading each text and tagging as predominantly satisfied is going to be a manual process. 
+
+Let us start off with the already prepared Satisfied data in the "WordAssociation.Rmd" file
+
+```{r}
+
+hiltSatisfaction <- hiltRev1[51:80]
+
+```
+
+### Step2 : Get the term Document Matrix
+
+Next task is to run the function for converting the list of text into a Document Term Matrix
+
+```{r}
+
+# Creating the Term Document Matrix
+ satTdm <- tdmCreator(hiltSatisfaction)
+
+```
+
+### Step 3 : Creating the vectors for the most frequent words
+
+```{r}
+
+# Satisfied function for rooms
+
+roomSatTemp <- templateCreate(satTdm,'rooms',0.30)
+roomSatTemp1 <- templateCreate(satTdm,'rooms',0.30)
+roomSatTemp1 <- templateCreate(satTdm,'rooms',0.30)
+names(roomSatTemp1)[2] <- "freq3"
+
+
+```
+
+### Step 4 : Combining the templates
+
+```{r}
+# First creating a consolidated template
+roomSatCon <- roomSatTemp
+names(roomSatCon)[2] <- "FREQ"
+```
+
+
+
+```{r}
+
+roomSatCon <- merge(roomSatCon,roomSatTemp1,all = TRUE) # First consolidation
+
+
+
+```
+
+# Tomorrow
+1. Expand on the satisfied template with more and more data
+2. Create other templates also

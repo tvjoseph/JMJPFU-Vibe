@@ -1,0 +1,107 @@
+---
+title: "JMJPFU-Functions"
+output: html_notebook
+---
+
+## JMJPFU
+### 10-Feb-2017
+
+### Function 1 : Function for converting List of text into a Document Term Matrix
+
+Use of the function : For Template creation
+
+```{r}
+
+tdmCreator <- function(textList){
+  
+  # textList : This is a list of text which has to be analysed further
+  
+  
+library(SnowballC)
+library(RWeka)
+library(rJava)
+library(RWekajars)
+library(tm)  
+  
+# Converting all the list elements to a dataframe
+textDf <- do.call("rbind",lapply(textList,as.data.frame)) # hiltSatisfacDf > textDf
+# Converting the factors to character
+textDf <- data.frame(lapply(textDf,as.character),stringsAsFactors = FALSE)
+# Providing a name to the text column
+names(textDf) <- "text"
+# Converting this into a corpus  
+textCorp <- Corpus(VectorSource(textDf$text)) #  hiltSatCorp > textCorp 
+# Converting to lowercase
+textCorp <- tm_map(textCorp,tolower) 
+# Remove punctuations
+textCorp <- tm_map(textCorp,removePunctuation)
+# Remove numbers
+textCorp <- tm_map(textCorp,removeNumbers)
+# Removing stopwords
+textCorp <- tm_map(textCorp,removeWords,stopwords('english'))
+# Doing the stemming
+textCorp <- tm_map(textCorp,stemDocument)
+# Converting the text to Plaintext
+ textCorp <- tm_map(textCorp, PlainTextDocument)
+# Converting to a corpus for making TDM
+textCorp <- Corpus(VectorSource(textCorp))
+# Creating TermDocumentMatrix
+textDtm <- TermDocumentMatrix(textCorp)
+
+return(textDtm)
+ 
+  
+} # End of the function
+
+
+```
+
+
+## Function 2 : Creating the template frequencies 
+
+This function is to create the initial template for the frequencies
+Use : This will be used in the SatisfiedTemplate or any other templates
+
+```{r}
+
+templateCreate <- function(tdm,arch,thresh){
+  
+  # This is the function to create a template DF from the term document and a charachteristic word
+  # tdm : Term document matrix which needs to be converted to the matrix
+  # arch : This is the text which denotes the archetype of the hotel like Room, Food, etc. This will be a character
+  # thresh : This is the threshold within which the frequencies have to be found out. This will be numeric less or equal to 1
+  
+  library(dplyr)
+  # Finding the association from the tdm
+  archEmo <- findAssocs(tdm, arch,thresh) # roomSat > archEmo
+  # Converting the list element into a data frame
+  assocDf <- data.frame(archEmo[[1]])
+  # Naming the first column as frequency
+  names(assocDf) <- "freq"
+  # Making the words as the second variable
+  assocDf$word <- rownames(assocDf)
+  # Re-ordering the variables
+  assocDf <- assocDf %>% select(word,freq)
+  
+  row.names(assocDf) <- NULL
+  
+  return(assocDf)
+}
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

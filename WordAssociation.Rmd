@@ -172,3 +172,5 @@ https://www.kaggle.com/lrargerich/crowdflower-search-relevance/r-vector-space-mo
 A good document on Paradigmatic and syntigmatic associations
 
 http://www.aclweb.org/anthology/C02-1007
+
+
