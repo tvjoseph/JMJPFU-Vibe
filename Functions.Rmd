@@ -91,7 +91,58 @@ templateCreate <- function(tdm,arch,thresh){
 
 ```
 
+# JMJPFU
+## 13-Feb-2017
 
+### Fu
+function 3 : Overencompossing Function to create template
+
+The below is an overencompassing function which integrates lots of functions and scripts to create template
+
+```{r}
+
+conTemplate <- function(scrRev,num1,num2,char1,char2,num3,name1,charEmoCon){
+  
+  # scrRev : This is the text which is scrapped from the net
+  # num1, num2 : There are the anchor points of the text i.e start point of the text and end point of the text
+  # char1 : This is the artefact of the domain which needs to be passed to create the termDocumentmatrix data frame
+  # char2 : This is the second character of the above which could be a plural or a different form of the same word
+  # num3 : This is the threshold frequency which we want the termDocumentMatrix to be
+  # name1 : A character term which needs to be given to the term Document dataframe
+  # charEmoCon : This is a template which needs to be updated with more columns of frequencies
+  
+  # Getting the relevant text
+  dfEmotion <- scrRev[num1:num2] # hiltSatisfaction > dfEmotion hiltRev1 > scrRev 
+  
+  # Creating the Term document matrix
+  satTdm <- tdmCreator(dfEmotion) # Calling the function tdmCreator
+  
+  # Creating the Frequency dataframe
+  
+charEmoTemp1 <- templateCreate(satTdm,char1,num3) # roomSatTemp1 > charEmoTemp1 'rooms' > char1 , 
+
+names(charEmoTemp1)[2] <- name1
+
+if(char2 != "NA" ){ charEmoTemp2 <- templateCreate(satTdm,char2,num3)
+names(charEmoTemp2)[2] <- name1
+charEmoTemp1 <- rbind(charEmoTemp1,charEmoTemp2)
+
+} # End of the if condition # roomSatTemp2 > charEmoTemp2
+
+# Consolidating the final document with merge
+
+charEmoCon <- merge(charEmoCon,charEmoTemp1,all = TRUE) # roomSatCon > charEmoCon
+
+
+return(charEmoCon) # Returning the consolidated dataframe
+  
+  
+  
+  
+} # End of the function
+
+
+```
 
 
 

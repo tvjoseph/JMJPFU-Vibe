@@ -66,12 +66,12 @@ roomSatCon <- roomSatTemp
 names(roomSatCon)[2] <- "FREQ"
 ```
 
+Doing the merge of all the template 
 
 
 ```{r}
 
 roomSatCon <- merge(roomSatCon,roomSatTemp1,all = TRUE) # First consolidation
-
 
 
 ```
