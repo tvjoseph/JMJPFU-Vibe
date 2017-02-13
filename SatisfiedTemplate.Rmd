@@ -29,7 +29,10 @@ Let us start off with the already prepared Satisfied data in the "WordAssociatio
 
 ```{r}
 
-hiltSatisfaction <- hiltRev1[51:80]
+hiltSatisfaction <- hiltRev1[351:400]
+hiltSatisfaction
+
+# 255,258,273,
 
 ```
 
@@ -50,11 +53,15 @@ Next task is to run the function for converting the list of text into a Document
 
 # Satisfied function for rooms
 
-roomSatTemp <- templateCreate(satTdm,'rooms',0.30)
+#roomSatTemp <- templateCreate(satTdm,'rooms',0.30)
+#roomSatTemp1 <- templateCreate(satTdm,'rooms',0.30)
 roomSatTemp1 <- templateCreate(satTdm,'rooms',0.30)
-roomSatTemp1 <- templateCreate(satTdm,'rooms',0.30)
-names(roomSatTemp1)[2] <- "freq3"
+roomSatTemp2 <- templateCreate(satTdm,'room',0.30)
 
+names(roomSatTemp1)[2] <- "freq8"
+names(roomSatTemp2)[2] <- "freq8"
+
+roomSatTemp1 <- rbind(roomSatTemp1,roomSatTemp2)
 
 ```
 
@@ -62,8 +69,8 @@ names(roomSatTemp1)[2] <- "freq3"
 
 ```{r}
 # First creating a consolidated template
-roomSatCon <- roomSatTemp
-names(roomSatCon)[2] <- "FREQ"
+#roomSatCon <- roomSatTemp
+#names(roomSatCon)[2] <- "FREQ"
 ```
 
 Doing the merge of all the template 
@@ -76,6 +83,57 @@ roomSatCon <- merge(roomSatCon,roomSatTemp1,all = TRUE) # First consolidation
 
 ```
 
-# Tomorrow
-1. Expand on the satisfied template with more and more data
-2. Create other templates also
+### JMJPFU
+### 13-Feb-2017
+
+hiltRev1[51:80] - "freq3"
+hiltRev1[81:120] - "freq4"
+hiltRev1[200:250] - "freq5"
+hiltRev1[251:300] - "freq6"
+hiltRev1[301:350] - "freq7"
+hiltRev1[351:400] - "freq8"
+hiltRev1[401:450] - "freq9"
+hiltRev1[451:550] - "freq10"
+hiltRev1[551:650] - "freq11"
+hiltRev1[651:750] - "freq12"
+
+```{r}
+# Looking at the text
+
+hiltRev1[651:750]
+```
+
+
+Running the function for the consolidated template as per the above schedule
+
+```{r}
+
+roomSatCon <- conTemplate(hiltRev1,1051,1122,"rooms","room",0.3,"freq16",roomSatCon)
+
+```
+
+Now that one template is created, let us consolidate the results and make summary of the frequencies
+
+```{r}
+roomSatCon$Summary <- rowMeans(roomSatCon[,2:17],na.rm = TRUE)
+
+roomSatCon$Count <- row(roomSatCon[,2:17],na.rm = TRUE)
+```
+
+Doing a row count
+
+```{r}
+for(i in 1:nrow(roomSatCon)){
+  cou = 0
+  
+  for(j in 2:17){
+    
+    if(!is.na(roomSatCon[i,j])){cou = cou+1}
+    
+  }
+  
+  roomSatCon$Count[i] <- cou
+  
+}
+```
+
