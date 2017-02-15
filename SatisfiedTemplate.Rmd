@@ -137,3 +137,17 @@ for(i in 1:nrow(roomSatCon)){
 }
 ```
 
+# JMJPFU
+## 15-Feb-2017
+
+Let us write the consolidated dataframe into a csv file for further classification
+
+```{r}
+write.csv(roomSatCon,"Room_Satisfied.csv")
+# Reading the file after validation
+
+roomSatVal <- read.csv("Room_Satisfied.csv",header=TRUE)
+
+roomSatVal$X <- NULL
+```
+
