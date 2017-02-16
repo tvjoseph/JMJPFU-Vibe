@@ -222,3 +222,34 @@ Let us now implement the vector similarity concepts. The below are the tasks whi
 
 Let us now implement one by one each of the above ideas in seperate seperate notebooks.
 
+### JMJPFU
+### 16-Feb-2017
+
+Scrapping some negative reviews for hotels
+
+```{r}
+#url <- paste0("https://www.tripadvisor.in/ShowUserReviews-g304556-d589477-r459899087-The_Raintree_Hotel_St_Mary_s-Chennai_Madras_Chennai_District_Tamil_Nadu.html#CHECK_RATES_CONT")
+
+url1 <- paste0("https://www.tripadvisor.in/ShowUserReviews-g304556-d589477-r388743577-The_Raintree_Hotel_St_Mary_s-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS")
+
+
+hotelBad <- read_html(url1)
+
+#list1 <- hotelBad %>% html_nodes("div p") %>% html_text()
+
+# Selecting only the relevant text
+
+list2 <- hotelBad %>% html_nodes("div p") %>% html_text()
+
+#badRev <- list(list1,list2)
+
+#badRev <- unlist(badRev) # To create a combined list
+
+# Continuous attempts
+
+badRev <- list(badRev,list2)
+badRev <- unlist(badRev)
+
+```
+
+
