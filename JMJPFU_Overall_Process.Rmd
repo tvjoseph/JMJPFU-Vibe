@@ -230,7 +230,7 @@ Scrapping some negative reviews for hotels
 ```{r}
 #url <- paste0("https://www.tripadvisor.in/ShowUserReviews-g304556-d589477-r459899087-The_Raintree_Hotel_St_Mary_s-Chennai_Madras_Chennai_District_Tamil_Nadu.html#CHECK_RATES_CONT")
 
-url1 <- paste0("https://www.tripadvisor.in/ShowUserReviews-g304556-d589477-r388743577-The_Raintree_Hotel_St_Mary_s-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS")
+url1 <- paste0("https://www.tripadvisor.in/ShowUserReviews-g304556-d589477-r336536821-The_Raintree_Hotel_St_Mary_s-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS")
 
 
 hotelBad <- read_html(url1)
@@ -249,6 +249,44 @@ list2 <- hotelBad %>% html_nodes("div p") %>% html_text()
 
 badRev <- list(badRev,list2)
 badRev <- unlist(badRev)
+
+badRev[1:50]
+
+# Filter on emotions
+
+# Delighted # c(3,)
+# Satisfied # c(2,)
+# OK #
+# Disappointment # c(1,)
+# Angry #
+
+badrevDf <- data.frame(badRev)
+write.csv(badrevDf,"reviewTrain1.csv")
+getwd()
+
+# Creating a new column for classification
+
+badrevDf$class <- 0
+
+```
+
+Next number 45
+
+# JMJPFU
+## 21-Feb-2017
+
+Below we are reviewing each comment and classifying it according to the emotion displayed
+
+```{r}
+
+# Delighted # c(3,)
+# Satisfied # c(2,)
+# OK #
+# Disappointment # c(1,)
+# Angry #
+badrevDf$badRev[6:10]
+
+badrevDf$class[6:10] <- c(0,3,1,1,1)
 
 ```
 
