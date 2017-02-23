@@ -279,10 +279,25 @@ Below we are reviewing each comment and classifying it according to the emotion 
 
 ```{r}
 # Delighted # c(3,),# Satisfied # c(2,),# OK #,# Disappointment # c(1,),# Angry #
-badrevDf$badRev[226:235]
-badrevDf$class[226:235] <- c(1,0,3,1,2,1,5,0,2,2)
+badrevDf$badRev[256:266]
+badrevDf$class[256:266] <- c(1,1,3,0,1,2,2,0,2,2,0)
 ```
 
-# Tomorrow
-1. The current text has to be rated. 226-235
+# JMJPFU
+## 23-Feb-2017
+1. Completed so far - Till row 266
+
+```{r}
+badRev[237]
+```
+Now that we have classified the text file, let us store the relevant data in various dataframes
+
+```{r}
+delightDf <- badrevDf %>% filter(class==1)
+satisDf <- badrevDf %>% filter(class==2)
+okDf <- badrevDf %>% filter(class==3)
+dissatDf <- badrevDf %>% filter(class==4)
+angryDf <- badrevDf %>% filter(class==5)
+
+```
 
