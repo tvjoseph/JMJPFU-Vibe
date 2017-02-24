@@ -301,3 +301,12 @@ angryDf <- badrevDf %>% filter(class==5)
 
 ```
 
+# JMJPFU
+### 24-Feb-2017
+
+Listed below are the templates created for each of the artefact
+
+1: Room : Satisfied - roomSatCon , Angry - roomAngTemp
+2: Restaurant : 
+
+

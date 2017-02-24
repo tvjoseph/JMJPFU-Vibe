@@ -1,0 +1,69 @@
+---
+title: "JMJPFU-angryTemplate"
+output: html_notebook
+---
+
+# JMJPFU
+## 24-Feb-2017
+
+This is a template for the Angry Template. Let us proceed with the required steps.
+
+
+### Step 1: Loading the required library files
+
+```{r}
+library(SnowballC)
+library(RWeka)
+library(rJava)
+library(RWekajars)
+library(tm)
+```
+
+
+### Step 2: Looking at the data
+
+```{r}
+angryRev <- angryDf$badRev
+angryRev[1:6]
+```
+
+### Step 3 : Creating the term Document Matrix
+
+This step is only required for the first time a template is created
+
+```{r}
+ angTdm <- tdmCreator(angryRev)
+```
+
+### Step 4 : Creating an initial template for the emotion
+
+This step is also required to be done for the first time a template is created
+
+```{r}
+roomAngTemp <- templateCreate(angTdm,'rooms',0.30)
+```
+
+### Step 5 : Expanding the template
+
+This is the step which needs to be followed once an intial template is created
+
+```{r}
+roomAngTemp <- conTemplate(angryRev,1,6,"room","NA",0.3,"freq1",roomAngTemp)
+```
+
+#### Creating Template for Restaurant
+
+## Initial template
+
+```{r}
+### Angry data
+
+#angryRev
+
+### Creating an initial template for the emotion
+
+restAngTemp <- templateCreate(angTdm,'restaurant',0.05)
+
+```
+
+The angTdm dosent have any data pertaining to restaurants. So some more data has to be collected

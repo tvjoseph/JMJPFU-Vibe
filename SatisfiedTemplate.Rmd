@@ -166,4 +166,51 @@ hiltRev1[191:220]
 
 ```
 
+# JMJPFU
+### 24-Feb-2017
+
+Let us now look at expanding the template with more text
+
+```{r}
+
+# Removing the count and summary columns
+
+#roomSatCon$Summary <- roomSatCon$Count <- NULL
+
+# Creating a new text
+
+#satTemplate <- satisDf$badRev
+
+# Consolidating with the template
+
+roomSatCon <- conTemplate(satTemplate,1,59,"rooms","room",0.3,"freq17",roomSatCon)
+
+```
+
+## Creating template for another variable - Restaurant
+
+## Initial template creator
+
+```{r}
+### Satisfied data
+
+# satTemplate
+
+###  Creating the term Document Matrix
+
+satTdm <- tdmCreator(satTemplate)
+
+### Creating an initial template for the emotion
+
+restSatTemp <- templateCreate(satTdm,'restaurant',0.30)
+
+```
+
+## Template consolidator
+
+```{r}
+
+restSatTemp <- conTemplate(satTemplate,1,59,"restaurants","NA",0.3,"freq1",restSatTemp)
+
+```
 
