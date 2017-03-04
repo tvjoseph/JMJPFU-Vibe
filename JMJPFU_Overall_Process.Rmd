@@ -317,7 +317,9 @@ Let us consolidate the templates further after classifying the text
 
 ```{r}
 
-url1 <- paste0("https://www.tripadvisor.in/Hotel_Review-g297633-d304809-Reviews-Vivanta_by_Taj_Malabar-Kochi_Cochin_Kerala.html")
+url1 <- paste0("https://www.tripadvisor.in/ShowUserReviews-g304556-d1597314-r429880886-Hilton_Chennai-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS")
+
+
 
 
 
@@ -328,9 +330,9 @@ hotelRev <- read_html(url1)
 
 list2 <- hotelRev %>% html_nodes("div p") %>% html_text()
 
-list2 <- hotelRev %>% html_nodes("#REVIEWS") %>% html_text()
+#list2 <- hotelRev %>% html_nodes("#REVIEWS") %>% html_text()
 
-list2 <- hotelRev %>% html_nodes("p") %>% html_text()
+#list2 <- hotelRev %>% html_nodes("p") %>% html_text()
 
 #badRev <- list(list1,list2)
 
@@ -338,16 +340,16 @@ list2 <- hotelRev %>% html_nodes("p") %>% html_text()
 
 # Continuous attempts
 
-hotelRev <- list(hotelRev,list2)
-hotelRev <- unlist(hotelRev)
+hotelData <- list(hotelData,list2)
+hotelData <- unlist(hotelData)
 
 
 
-hotelrevDf <- data.frame(hotelRev)
+#hotelrevDf <- data.frame(hotelRev)
 
 # Creating a new column for classification
 
-hotelrevDf$class <- 0
+#hotelrevDf$class <- 0
 
 
 ```
