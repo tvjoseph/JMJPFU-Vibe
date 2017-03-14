@@ -317,10 +317,10 @@ Let us consolidate the templates further after classifying the text
 
 ```{r}
 
-url1 <- paste0("https://www.tripadvisor.in/ShowUserReviews-g304556-d1597314-r429880886-Hilton_Chennai-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS")
+url1 <- paste0("https://www.tripadvisor.in/ShowUserReviews-g297605-d2517469-r330022559-Sukhmantra_Resort_and_Spa-Candolim_Bardez_Goa.html#REVIEWS")
 
 
-
+#https://www.tripadvisor.in/ShowUserReviews-g297605-d2517469-r407738122-Sukhmantra_Resort_and_Spa-Candolim_Bardez_Goa.html#CHECK_RATES_CONT
 
 
 hotelRev <- read_html(url1)
@@ -328,11 +328,11 @@ hotelRev <- read_html(url1)
 
 # Selecting only the relevant text
 
-list2 <- hotelRev %>% html_nodes("div p") %>% html_text()
+#list2 <- hotelRev %>% html_nodes("div p") %>% html_text()
 
 #list2 <- hotelRev %>% html_nodes("#REVIEWS") %>% html_text()
 
-#list2 <- hotelRev %>% html_nodes("p") %>% html_text()
+list2 <- hotelRev %>% html_nodes("p") %>% html_text()
 
 #badRev <- list(list1,list2)
 
@@ -354,3 +354,7 @@ hotelData <- unlist(hotelData)
 
 ```
 
+# JMJPFU
+### 10-Mar-2017
+
+Today let us try some other hotel URL and try to get more data for classification. Will use the same method as above.
