@@ -363,4 +363,8 @@ hotelData <- unlist(hotelData)
 ### 10-Mar-2017
 
 Today let us try some other hotel URL and try to get more data for classification. Will use the same method as above.
->>>>>>> 88682ad679bceb9929802040651ba0a10d9ee3af
+
+# JMJPFU
+### 26-Mar-2017
+
+Lord bless this venture with your Grace and Wisdom.
