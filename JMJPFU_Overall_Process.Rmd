@@ -230,7 +230,7 @@ Scrapping some negative reviews for hotels
 ```{r}
 #url <- paste0("https://www.tripadvisor.in/ShowUserReviews-g304556-d589477-r459899087-The_Raintree_Hotel_St_Mary_s-Chennai_Madras_Chennai_District_Tamil_Nadu.html#CHECK_RATES_CONT")
 
-url1 <- paste0("https://www.tripadvisor.in/ShowUserReviews-g304556-d589477-r388743577-The_Raintree_Hotel_St_Mary_s-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS")
+url1 <- paste0("https://www.tripadvisor.in/ShowUserReviews-g304556-d589477-r336536821-The_Raintree_Hotel_St_Mary_s-Chennai_Madras_Chennai_District_Tamil_Nadu.html#REVIEWS")
 
 
 hotelBad <- read_html(url1)
@@ -250,9 +250,117 @@ list2 <- hotelBad %>% html_nodes("div p") %>% html_text()
 badRev <- list(badRev,list2)
 badRev <- unlist(badRev)
 
+badRev[1:50]
+
+# Filter on emotions
+
+# Delighted # c(3,)
+# Satisfied # c(2,)
+# OK #
+# Disappointment # c(1,)
+# Angry #
+
+badrevDf <- data.frame(badRev)
+write.csv(badrevDf,"reviewTrain1.csv")
+getwd()
+
+# Creating a new column for classification
+
+badrevDf$class <- 0
+
+```
+
+Next number 45
+
+# JMJPFU
+## 21-Feb-2017
+
+Below we are reviewing each comment and classifying it according to the emotion displayed
+
+```{r}
+# Delighted # c(3,),# Satisfied # c(2,),# OK #,# Disappointment # c(1,),# Angry #
+badrevDf$badRev[256:266]
+badrevDf$class[256:266] <- c(1,1,3,0,1,2,2,0,2,2,0)
 ```
 
 # JMJPFU
+## 23-Feb-2017
+1. Completed so far - Till row 266
+
+```{r}
+badRev[237]
+```
+Now that we have classified the text file, let us store the relevant data in various dataframes
+
+```{r}
+delightDf <- badrevDf %>% filter(class==1)
+satisDf <- badrevDf %>% filter(class==2)
+okDf <- badrevDf %>% filter(class==3)
+dissatDf <- badrevDf %>% filter(class==4)
+angryDf <- badrevDf %>% filter(class==5)
+
+```
+
+# JMJPFU
+<<<<<<< HEAD
 ### 26-Mar-2017
 
 This is the new beginning of the vibe project from home. Lord save this and guide this venture
+=======
+### 24-Feb-2017
+
+Listed below are the templates created for each of the artefact
+
+1: Room : Satisfied - roomSatCon , Angry - roomAngTemp
+2: Restaurant : 
+
+
+# JMJPFU
+### 27-Feb-2017
+
+Let us consolidate the templates further after classifying the text
+
+```{r}
+
+url1 <- paste0("https://www.tripadvisor.in/ShowUserReviews-g297605-d2517469-r330022559-Sukhmantra_Resort_and_Spa-Candolim_Bardez_Goa.html#REVIEWS")
+
+
+#https://www.tripadvisor.in/ShowUserReviews-g297605-d2517469-r407738122-Sukhmantra_Resort_and_Spa-Candolim_Bardez_Goa.html#CHECK_RATES_CONT
+
+
+hotelRev <- read_html(url1)
+
+
+# Selecting only the relevant text
+
+#list2 <- hotelRev %>% html_nodes("div p") %>% html_text()
+
+#list2 <- hotelRev %>% html_nodes("#REVIEWS") %>% html_text()
+
+list2 <- hotelRev %>% html_nodes("p") %>% html_text()
+
+#badRev <- list(list1,list2)
+
+#badRev <- unlist(badRev) # To create a combined list
+
+# Continuous attempts
+
+hotelData <- list(hotelData,list2)
+hotelData <- unlist(hotelData)
+
+
+
+#hotelrevDf <- data.frame(hotelRev)
+
+# Creating a new column for classification
+
+#hotelrevDf$class <- 0
+
+
+```
+
+# JMJPFU
+### 10-Mar-2017
+
+Today let us try some other hotel URL and try to get more data for classification. Will use the same method as above.
+>>>>>>> 88682ad679bceb9929802040651ba0a10d9ee3af

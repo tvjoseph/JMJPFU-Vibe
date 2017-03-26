@@ -3,10 +3,18 @@ title: "JMJPFU-SatisfiedTemplate"
 output: html_notebook
 ---
 
+
+
+
 # JMJPFU
 ### 10-Feb-2017
 
-This is the process for creation of a template. Let us start with Satisfied
+## Artefacts for a hotel
+
+Room, Food, Restaurant, Staff, Lobby, Reception, Transfer, Facilities, Cleanliness, Recommend etc
+
+
+This is the process for creation of Satisfied template for each artevact.
 
 
 ### Initial tasks : Setting up the library files
@@ -166,4 +174,130 @@ hiltRev1[191:220]
 
 ```
 
+<<<<<<< HEAD
+=======
+# JMJPFU
+### 24-Feb-2017
+
+Let us now look at expanding the template with more text
+
+```{r}
+
+# Removing the count and summary columns
+
+#roomSatCon$Summary <- roomSatCon$Count <- NULL
+
+# Creating a new text
+
+#satTemplate <- satisDf$badRev
+
+# Consolidating with the template
+
+roomSatCon <- conTemplate(satTemplate,1,59,"rooms","room",0.3,"freq17",roomSatCon)
+
+```
+
+## Creating template for another variable - Restaurant
+
+## Initial template creator
+
+```{r}
+### Satisfied data
+
+# satTemplate
+
+###  Creating the term Document Matrix
+
+satTdm <- tdmCreator(satTemplate)
+
+### Creating an initial template for the emotion
+
+restSatTemp <- templateCreate(satTdm,'restaurant',0.30)
+
+```
+
+## Template consolidator
+
+```{r}
+
+restSatTemp <- conTemplate(satTemplate,1,59,"restaurants","NA",0.3,"freq1",restSatTemp)
+
+```
+
+# JMJPFU
+### 27-Feb-2017
+
+### Creating template for "food"
+
+Words like buffet,breakfast etc might also be associated with food
+
+```{r}
+
+#foodSatTemp <- templateCreate(satTdm,'food',0.30)
+
+# Associating buffet and breakfast
+
+foodSatTemp <- conTemplate(satTemplate,1,59,"buffet","NA",0.3,"freq1",foodSatTemp)
+
+foodSatTemp <- conTemplate(satTemplate,1,59,"breakfast","NA",0.3,"freq2",foodSatTemp)
+
+
+
+```
+
+### Creating template for "staff"
+
+```{r}
+
+staffSatTemp <- templateCreate(satTdm,'staff',0.30)
+
+## Associating "employees" and "employee" also with staff
+
+staffSatTemp <- conTemplate(satTemplate,1,59,"employees","employee",0.3,"freq1",staffSatTemp)
+
+```
+
+### Creating template for "Lobby"
+
+```{r}
+lobbySatTemp <- templateCreate(satTdm,'lobby',0.3)
+
+```
+
+### Creating template for "Reception"
+
+Associating front desk also with reception
+
+```{r}
+receptionSatTemp <- templateCreate(satTdm,'reception',0.3)
+# Associating front desk also
+receptionSatTemp <- conTemplate(satTemplate,1,59,"front desk","NA",0.3,"freq1",receptionSatTemp)
+
+receptionSatTemp <- conTemplate(satTemplate,1,59,"frontdesk","receptionist",0.3,"freq2",receptionSatTemp)
+
+```
+
+## Creating template for "Transfer"
+
+```{r}
+transSatTemp <- templateCreate(satTdm,'transfers',0.3)
+```
+
+## Creating template for "facilities"
+
+```{r}
+
+facilSatTemp <- templateCreate(satTdm,'facility',0.3)
+
+facilSatTemp <- conTemplate(satTemplate,1,59,"facilities","NA",0.3,"freq1",facilSatTemp)
+
+```
+
+## Creating template for "Location"
+
+```{r}
+locaSatTemp <- templateCreate(satTdm,'location',0.3)
+```
+
+>>>>>>> 88682ad679bceb9929802040651ba0a10d9ee3af
 
