@@ -151,3 +151,19 @@ roomSatVal <- read.csv("Room_Satisfied.csv",header=TRUE)
 roomSatVal$X <- NULL
 ```
 
+# JMJPFU
+### 16-Feb-2017
+
+Today let us look at other emotions and check if there are any patterns evolving in them. We will look at 
+
+Anger
+```{r}
+hiltRev1[191:220]
+
+# Mixed : c(5,17,168,205)
+# Anger : c(43,189)
+# Frustrated : c(10,82,84)
+
+```
+
+
