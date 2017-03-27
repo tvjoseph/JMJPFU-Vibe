@@ -195,9 +195,9 @@ library(tm)</code></pre>
 <h3>Step 2: Looking at the data</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYW5ncnlSZXYgPC0gYW5ncnlEZiRiYWRSZXZcbmFuZ3J5UmV2WzE6Nl1cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYW5ncnlSZXYgPC0gYW5ncnlEZiRiYWRSZXZcbmFuZ3J5UmV2WzE6OF1cbmBgYCJ9 -->
 <pre class="r"><code>angryRev &lt;- angryDf$badRev
-angryRev[1:6]</code></pre>
+angryRev[1:8]</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -229,13 +229,13 @@ angryRev[1:6]</code></pre>
 <p>This is the step which needs to be followed once an intial template is created</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm9vbUFuZ1RlbXAgPC0gY29uVGVtcGxhdGUoYW5ncnlSZXYsMSw2LFwicm9vbVwiLFwiTkFcIiwwLjMsXCJmcmVxMVwiLHJvb21BbmdUZW1wKVxuYGBgIn0= -->
-<pre class="r"><code>roomAngTemp &lt;- conTemplate(angryRev,1,6,&quot;room&quot;,&quot;NA&quot;,0.3,&quot;freq1&quot;,roomAngTemp)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm9vbUFuZ1RlbXAgPC0gY29uVGVtcGxhdGUoYW5ncnlSZXYsOSwxNixcInJvb21zXCIsXCJOQVwiLDAuMyxcImZyZXEzXCIscm9vbUFuZ1RlbXApXG5gYGAifQ== -->
+<pre class="r"><code>roomAngTemp &lt;- conTemplate(angryRev,9,16,&quot;rooms&quot;,&quot;NA&quot;,0.3,&quot;freq3&quot;,roomAngTemp)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<div id="creating-template-for-restaurant" class="section level4">
-<h4>Creating Template for Restaurant</h4>
+<div id="creating-template-for-food" class="section level4">
+<h4>Creating Template for Food</h4>
 </div>
 </div>
 </div>
@@ -243,20 +243,19 @@ angryRev[1:6]</code></pre>
 <h2>Initial template</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMjIEFuZ3J5IGRhdGFcbiNhbmdyeVJldlxuIyMjIENyZWF0aW5nIGFuIGluaXRpYWwgdGVtcGxhdGUgZm9yIHRoZSBlbW90aW9uXG5yZXN0QW5nVGVtcCA8LSB0ZW1wbGF0ZUNyZWF0ZShhbmdUZG0sJ3Jlc3RhdXJhbnQnLDAuMDUpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMjIEFuZ3J5IGRhdGFcbiNhbmdyeVJldlxuIyMjIENyZWF0aW5nIGFuIGluaXRpYWwgdGVtcGxhdGUgZm9yIHRoZSBlbW90aW9uXG5yZXN0QW5nVGVtcCA8LSB0ZW1wbGF0ZUNyZWF0ZShhbmdUZG0sJ2Zvb2QnLDAuMylcbmBgYCJ9 -->
 <pre class="r"><code>### Angry data
 #angryRev
 ### Creating an initial template for the emotion
-restAngTemp &lt;- templateCreate(angTdm,'restaurant',0.05)</code></pre>
+restAngTemp &lt;- templateCreate(angTdm,'food',0.3)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>The angTdm dosent have any data pertaining to restaurants. So some more data has to be collected</p>
 <!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpNSlBGVS1hbmdyeVRlbXBsYXRlIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KIyBKTUpQRlUNCiMjIDI0LUZlYi0yMDE3DQoNClRoaXMgaXMgYSB0ZW1wbGF0ZSBmb3IgdGhlIEFuZ3J5IFRlbXBsYXRlLiBMZXQgdXMgcHJvY2VlZCB3aXRoIHRoZSByZXF1aXJlZCBzdGVwcy4NCg0KDQojIyMgU3RlcCAxOiBMb2FkaW5nIHRoZSByZXF1aXJlZCBsaWJyYXJ5IGZpbGVzDQoNCmBgYHtyfQ0KbGlicmFyeShTbm93YmFsbEMpDQpsaWJyYXJ5KFJXZWthKQ0KbGlicmFyeShySmF2YSkNCmxpYnJhcnkoUldla2FqYXJzKQ0KbGlicmFyeSh0bSkNCmBgYA0KDQoNCiMjIyBTdGVwIDI6IExvb2tpbmcgYXQgdGhlIGRhdGENCg0KYGBge3J9DQphbmdyeVJldiA8LSBhbmdyeURmJGJhZFJldg0KYW5ncnlSZXZbMTo2XQ0KYGBgDQoNCiMjIyBTdGVwIDMgOiBDcmVhdGluZyB0aGUgdGVybSBEb2N1bWVudCBNYXRyaXgNCg0KVGhpcyBzdGVwIGlzIG9ubHkgcmVxdWlyZWQgZm9yIHRoZSBmaXJzdCB0aW1lIGEgdGVtcGxhdGUgaXMgY3JlYXRlZA0KDQpgYGB7cn0NCiBhbmdUZG0gPC0gdGRtQ3JlYXRvcihhbmdyeVJldikNCmBgYA0KDQojIyMgU3RlcCA0IDogQ3JlYXRpbmcgYW4gaW5pdGlhbCB0ZW1wbGF0ZSBmb3IgdGhlIGVtb3Rpb24NCg0KVGhpcyBzdGVwIGlzIGFsc28gcmVxdWlyZWQgdG8gYmUgZG9uZSBmb3IgdGhlIGZpcnN0IHRpbWUgYSB0ZW1wbGF0ZSBpcyBjcmVhdGVkDQoNCmBgYHtyfQ0Kcm9vbUFuZ1RlbXAgPC0gdGVtcGxhdGVDcmVhdGUoYW5nVGRtLCdyb29tcycsMC4zMCkNCmBgYA0KDQojIyMgU3RlcCA1IDogRXhwYW5kaW5nIHRoZSB0ZW1wbGF0ZQ0KDQpUaGlzIGlzIHRoZSBzdGVwIHdoaWNoIG5lZWRzIHRvIGJlIGZvbGxvd2VkIG9uY2UgYW4gaW50aWFsIHRlbXBsYXRlIGlzIGNyZWF0ZWQNCg0KYGBge3J9DQpyb29tQW5nVGVtcCA8LSBjb25UZW1wbGF0ZShhbmdyeVJldiwxLDYsInJvb20iLCJOQSIsMC4zLCJmcmVxMSIscm9vbUFuZ1RlbXApDQpgYGANCg0KIyMjIyBDcmVhdGluZyBUZW1wbGF0ZSBmb3IgUmVzdGF1cmFudA0KDQojIyBJbml0aWFsIHRlbXBsYXRlDQoNCmBgYHtyfQ0KIyMjIEFuZ3J5IGRhdGENCg0KI2FuZ3J5UmV2DQoNCiMjIyBDcmVhdGluZyBhbiBpbml0aWFsIHRlbXBsYXRlIGZvciB0aGUgZW1vdGlvbg0KDQpyZXN0QW5nVGVtcCA8LSB0ZW1wbGF0ZUNyZWF0ZShhbmdUZG0sJ3Jlc3RhdXJhbnQnLDAuMDUpDQoNCmBgYA0KDQpUaGUgYW5nVGRtIGRvc2VudCBoYXZlIGFueSBkYXRhIHBlcnRhaW5pbmcgdG8gcmVzdGF1cmFudHMuIFNvIHNvbWUgbW9yZSBkYXRhIGhhcyB0byBiZSBjb2xsZWN0ZWQNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpNSlBGVS1hbmdyeVRlbXBsYXRlIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KIyBKTUpQRlUNCiMjIDI0LUZlYi0yMDE3DQoNClRoaXMgaXMgYSB0ZW1wbGF0ZSBmb3IgdGhlIEFuZ3J5IFRlbXBsYXRlLiBMZXQgdXMgcHJvY2VlZCB3aXRoIHRoZSByZXF1aXJlZCBzdGVwcy4NCg0KDQojIyMgU3RlcCAxOiBMb2FkaW5nIHRoZSByZXF1aXJlZCBsaWJyYXJ5IGZpbGVzDQoNCmBgYHtyfQ0KbGlicmFyeShTbm93YmFsbEMpDQpsaWJyYXJ5KFJXZWthKQ0KbGlicmFyeShySmF2YSkNCmxpYnJhcnkoUldla2FqYXJzKQ0KbGlicmFyeSh0bSkNCmBgYA0KDQoNCiMjIyBTdGVwIDI6IExvb2tpbmcgYXQgdGhlIGRhdGENCg0KYGBge3J9DQphbmdyeVJldiA8LSBhbmdyeURmJGJhZFJldg0KYW5ncnlSZXZbMTo4XQ0KYGBgDQoNCiMjIyBTdGVwIDMgOiBDcmVhdGluZyB0aGUgdGVybSBEb2N1bWVudCBNYXRyaXgNCg0KVGhpcyBzdGVwIGlzIG9ubHkgcmVxdWlyZWQgZm9yIHRoZSBmaXJzdCB0aW1lIGEgdGVtcGxhdGUgaXMgY3JlYXRlZA0KDQpgYGB7cn0NCiBhbmdUZG0gPC0gdGRtQ3JlYXRvcihhbmdyeVJldikNCmBgYA0KDQojIyMgU3RlcCA0IDogQ3JlYXRpbmcgYW4gaW5pdGlhbCB0ZW1wbGF0ZSBmb3IgdGhlIGVtb3Rpb24NCg0KVGhpcyBzdGVwIGlzIGFsc28gcmVxdWlyZWQgdG8gYmUgZG9uZSBmb3IgdGhlIGZpcnN0IHRpbWUgYSB0ZW1wbGF0ZSBpcyBjcmVhdGVkDQoNCmBgYHtyfQ0Kcm9vbUFuZ1RlbXAgPC0gdGVtcGxhdGVDcmVhdGUoYW5nVGRtLCdyb29tcycsMC4zMCkNCmBgYA0KDQojIyMgU3RlcCA1IDogRXhwYW5kaW5nIHRoZSB0ZW1wbGF0ZQ0KDQpUaGlzIGlzIHRoZSBzdGVwIHdoaWNoIG5lZWRzIHRvIGJlIGZvbGxvd2VkIG9uY2UgYW4gaW50aWFsIHRlbXBsYXRlIGlzIGNyZWF0ZWQNCg0KYGBge3J9DQpyb29tQW5nVGVtcCA8LSBjb25UZW1wbGF0ZShhbmdyeVJldiw5LDE2LCJyb29tcyIsIk5BIiwwLjMsImZyZXEzIixyb29tQW5nVGVtcCkNCmBgYA0KDQojIyMjIENyZWF0aW5nIFRlbXBsYXRlIGZvciBGb29kDQoNCiMjIEluaXRpYWwgdGVtcGxhdGUNCg0KYGBge3J9DQojIyMgQW5ncnkgZGF0YQ0KDQojYW5ncnlSZXYNCg0KIyMjIENyZWF0aW5nIGFuIGluaXRpYWwgdGVtcGxhdGUgZm9yIHRoZSBlbW90aW9uDQoNCnJlc3RBbmdUZW1wIDwtIHRlbXBsYXRlQ3JlYXRlKGFuZ1RkbSwnZm9vZCcsMC4zKQ0KDQojIyBTdWJzZXF1ZW50IHRlbXBsYXRlIGZvciBmb29kDQoNCnJlc3RBbmdUZW1wIDwtIGNvblRlbXBsYXRlKGFuZ3J5UmV2LDksMTYsImZvb2QiLCJOQSIsMC4zLCJmcmVxMiIscmVzdEFuZ1RlbXApDQoNCmBgYA0KDQoNCg==</div>
 
 
 

@@ -24,7 +24,7 @@ library(tm)
 
 ```{r}
 angryRev <- angryDf$badRev
-angryRev[1:6]
+angryRev[1:8]
 ```
 
 ### Step 3 : Creating the term Document Matrix
@@ -48,10 +48,10 @@ roomAngTemp <- templateCreate(angTdm,'rooms',0.30)
 This is the step which needs to be followed once an intial template is created
 
 ```{r}
-roomAngTemp <- conTemplate(angryRev,1,6,"room","NA",0.3,"freq1",roomAngTemp)
+roomAngTemp <- conTemplate(angryRev,9,16,"rooms","NA",0.3,"freq3",roomAngTemp)
 ```
 
-#### Creating Template for Restaurant
+#### Creating Template for Food
 
 ## Initial template
 
@@ -62,8 +62,12 @@ roomAngTemp <- conTemplate(angryRev,1,6,"room","NA",0.3,"freq1",roomAngTemp)
 
 ### Creating an initial template for the emotion
 
-restAngTemp <- templateCreate(angTdm,'restaurant',0.05)
+restAngTemp <- templateCreate(angTdm,'food',0.3)
+
+## Subsequent template for food
+
+restAngTemp <- conTemplate(angryRev,9,16,"food","NA",0.3,"freq2",restAngTemp)
 
 ```
 
-The angTdm dosent have any data pertaining to restaurants. So some more data has to be collected
+

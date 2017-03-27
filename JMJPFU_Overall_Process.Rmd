@@ -9,6 +9,13 @@ output: html_notebook
 Lord help this venture. This is not my work but yours
 This is the first working file for the Vibe project. 
 
+
+# JMJPFU
+### 27-Mar-2017 : Reference URLS
+
+Scrapping web with rvest : https://www.analyticsvidhya.com/blog/2017/03/beginners-guide-on-web-scraping-in-r-using-rvest-with-hands-on-knowledge/?utm_source=feedburner&utm_medium=email&utm_campaign=Feed%3A+AnalyticsVidhya+%28Analytics+Vidhya%29
+
+
 This file is to define the overall process. This document will be updated regularly to reflect the right process
 
 Lord this is to test the new push command after the creation of remote
@@ -358,3 +365,56 @@ hotelData <- unlist(hotelData)
 ### 10-Mar-2017
 
 Today let us try some other hotel URL and try to get more data for classification. Will use the same method as above.
+
+# JMJPFU
+### 27-Mar-2017
+
+Now that we have scrapped some of the data. Let us look at labelling them and then use it for creating the training set.
+
+```{r}
+hoteldatDf <- matrix(nrow=length(hotelData),ncol = 1)
+
+hoteldatDf <- data.frame(hoteldatDf)
+
+hoteldatDf$class <- 0
+```
+
+Let us try classifying the new text
+
+```{r}
+# Delighted # c(3,),# Satisfied # c(2,),# OK #,# Disappointment # c(1,),# Angry #
+hoteldatDf$hoteldatDf[75:84]
+hoteldatDf$class[75:84] <- c(5,5,5,4,3,3,4,0,0,0)
+
+
+```
+
+
+Now to take the classified data
+
+```{r}
+# Taking subset till 165 as the others were already done
+tempDat <- hoteldatDf[85:165,]
+
+temp1 <- tempDat %>% filter(class==1) 
+temp2 <- tempDat %>% filter(class==2)
+temp3 <- tempDat %>% filter(class==3)
+temp4 <- tempDat %>% filter(class==4)
+temp5 <- tempDat %>% filter(class==5)
+
+# Names of the dataframes
+
+names(temp1) <- names(temp2) <-  names(temp3) <-  names(temp4) <-  names(temp5) <- c("badRev", "class" )
+
+# Combining with the existing data
+
+delightDf <- rbind(delightDf,temp1)
+satisDf <- rbind(satisDf,temp2)
+okDf <- rbind(okDf,temp3)
+dissatDf <- rbind(dissatDf,temp4)
+angryDf <- rbind(angryDf,temp5)
+
+
+# 
+```
+
