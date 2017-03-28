@@ -309,6 +309,11 @@ angryDf <- badrevDf %>% filter(class==5)
 ```
 
 # JMJPFU
+<<<<<<< HEAD
+### 26-Mar-2017
+
+This is the new beginning of the vibe project from home. Lord save this and guide this venture
+=======
 ### 24-Feb-2017
 
 Listed below are the templates created for each of the artefact
@@ -367,6 +372,7 @@ hotelData <- unlist(hotelData)
 Today let us try some other hotel URL and try to get more data for classification. Will use the same method as above.
 
 # JMJPFU
+<<<<<<< HEAD
 ### 27-Mar-2017
 
 Now that we have scrapped some of the data. Let us look at labelling them and then use it for creating the training set.
@@ -418,3 +424,8 @@ angryDf <- rbind(angryDf,temp5)
 # 
 ```
 
+=======
+### 26-Mar-2017
+
+Lord bless this venture with your Grace and Wisdom.
+>>>>>>> 15a87e35d8137eefac3d72d0f21e786f53f0da31
