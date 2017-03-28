@@ -6,6 +6,18 @@ output: html_notebook
 # JMJPFU
 ## 24-Feb-2017
 
+## Artefacts for a hotel
+
+Room: roomAngTemp
+Food: restAngTemp
+Restaurant: restAngTemp 
+Staff: staffAngTemp 
+Lobby: No data
+Reception: receptionAngTemp  
+Transfer:  transferAngTemp : no data
+Facilities: facilityAngTemp : no data
+Recommend: reccoAngTemp : no data
+
 This is a template for the Angry Template. Let us proceed with the required steps.
 
 
@@ -70,4 +82,94 @@ restAngTemp <- conTemplate(angryRev,9,16,"food","NA",0.3,"freq2",restAngTemp)
 
 ```
 
+# JMJPFU
+### 28-Mar-2017
+
+### Template Staff
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+angryRev <- angryDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ angTdm <- tdmCreator(angryRev[4]) # 4 is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ staffAngTemp <- templateCreate(angTdm,'staff',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+staffAngTemp <- conTemplate(angryRev,14,16,"staff","NA",0.3,"freq6",staffAngTemp)
+```
+
+
+### Template Reception
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+angryRev <- angryDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ angTdm <- tdmCreator(angryRev[13:16]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ receptionAngTemp <- templateCreate(angTdm,'reception',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+# receptionAngTemp: This dosent have any data for process 2:
+
+```
+
+### Template Recommend
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+angryRev <- angryDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ angTdm <- tdmCreator(angryRev[1:16]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ reccoAngTemp <- templateCreate(angTdm,'reccomend',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+# receptionAngTemp: This dosent have any data for process 2:
+
+```
 

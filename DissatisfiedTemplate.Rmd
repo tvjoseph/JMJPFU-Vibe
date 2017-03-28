@@ -1,0 +1,63 @@
+---
+title: "JMJPFU-Template"
+output: html_notebook
+---
+
+# JMJPFU
+### 28-Mar-2017
+
+This is the dissatisfied template for all artefacts
+
+## Artefacts for a hotel
+
+Room: 
+Food: 
+Restaurant: 
+Staff: 
+Lobby: 
+Reception: 
+Transfer: 
+Facilities:
+Recommend:
+
+### Initial tasks : Loading the library files
+
+```{r}
+library(SnowballC)
+library(RWeka)
+library(rJava)
+library(RWekajars)
+library(tm)
+
+```
+
+
+### Template 1 : Room
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+dissatRev <- dissatDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ dissatTdm <- tdmCreator(dissatRev[1:6]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ roomdisTemp <- templateCreate(dissatTdm,'room',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+roomdisTemp <- conTemplate(dissatRev,10,11,"room","rooms",0.3,"freq2",roomdisTemp)
+```
+
