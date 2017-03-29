@@ -10,10 +10,10 @@ This is the dissatisfied template for all artefacts
 
 ## Artefacts for a hotel
 
-Room: 
-Food: 
-Restaurant: 
-Staff: 
+Room: roomdisTemp
+Food: restdisTemp
+Restaurant: restdisTemp
+Staff: staffdisTemp
 Lobby: 
 Reception: 
 Transfer: 
@@ -59,5 +59,74 @@ dissatRev <- dissatDf$badRev
 ```{r}
 
 roomdisTemp <- conTemplate(dissatRev,10,11,"room","rooms",0.3,"freq2",roomdisTemp)
+
+
 ```
+
+# JMJPFU
+### 29-Mar-2017 
+
+### Template 2 : Food / Restaurant
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+dissatRev <- dissatDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ dissatTdm <- tdmCreator(dissatRev[1:20]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ restdisTemp <- templateCreate(dissatTdm,'food',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+restdisTemp <- conTemplate(dissatRev,121,149,"food","restaurant",0.3,"freq6",restdisTemp)
+
+
+```
+
+
+### Template 3 : Staff
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+dissatRev <- dissatDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ dissatTdm <- tdmCreator(dissatRev[1:149]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ staffdisTemp <- templateCreate(dissatTdm,'staff',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+staffdisTemp <- conTemplate(dissatRev,101,149,"staff","NA",0.3,"freq3",staffdisTemp)
+
+
+```
+
 

@@ -429,3 +429,15 @@ angryDf <- rbind(angryDf,temp5)
 
 Lord bless this venture with your Grace and Wisdom.
 >>>>>>> 15a87e35d8137eefac3d72d0f21e786f53f0da31
+
+# JMJPFU
+### 28-Mar-2017
+
+Today we will try creating the features for the project. These are the steps we will do
+
+1. Complete the templates for all the emotions for all the selected archetypes.
+2. Based on the template, create features for each text and then classify them.
+3. Prepare test cases and training cases
+4. Spot checking the models
+5. Look for predictions.
+6. Fine tune the predictions by doing feature engineering.
