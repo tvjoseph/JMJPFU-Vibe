@@ -14,11 +14,11 @@ Room: roomdisTemp
 Food: restdisTemp
 Restaurant: restdisTemp
 Staff: staffdisTemp
-Lobby: 
-Reception: 
-Transfer: 
-Facilities:
-Recommend:
+Lobby: lobbydisTemp : No data
+Reception: recepdisTemp : No data
+Transfer: trandisTemp : No Data
+Facilities: facilitydisTemp : No Data
+Recommend: reccodisTemp : No Data
 
 ### Initial tasks : Loading the library files
 
@@ -129,4 +129,35 @@ staffdisTemp <- conTemplate(dissatRev,101,149,"staff","NA",0.3,"freq3",staffdisT
 
 ```
 
+
+### Template 4 : Facility
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+dissatRev <- dissatDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ dissatTdm <- tdmCreator(dissatRev[1:149]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ reccodisTemp <- templateCreate(dissatTdm,'reccomend',0.10)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+reccodisTemp <- conTemplate(dissatRev,41,80,"lobby","NA",0.3,"freq3",reccodisTemp)
+
+
+```
 
