@@ -1,0 +1,225 @@
+---
+title: "JMJPFU-TemplateConsolidation"
+output: html_notebook
+---
+
+# JMJPFU
+### 30-Mar-2017
+
+This is the notebook for template consolidation.
+
+### Initial tasks 
+
+```{r}
+library(dplyr)
+```
+
+
+### Step 1: Getting all the templates.
+
+Delighted template
+
+Room: roomdelTemp - roomdel
+Food: resdelTemp - resdel
+Restaurant: resdelTemp - resdel : Need to remove all the duplicate values
+Staff: staffdelTemp - staffdel
+Lobby: lobbydelTemp - lobbydel
+Reception: recepdelTemp - recepdel
+Transfer: trandelTemp - trandel
+Facilities:facildelTemp - facildel
+Recommend: reccodelTemp - reccodel
+
+```{r}
+# Taking the count of columns where the columns are not NA's
+
+archeTemp <- function(roomdelTemp,c1,c2){
+  
+roomdelTemp$count <- rowSums(!is.na(roomdelTemp))
+
+roomdelTemp$count <- roomdelTemp$count - 1 # Subtracting 1 to exclude the words
+
+# Taking the mean of each frequency
+
+if(ncol(roomdelTemp) <= 3){roomdelTemp$mFreq <- roomdelTemp[,2]}else{roomdelTemp$mFreq <- rowMeans(roomdelTemp[,c1:c2],na.rm=TRUE)}
+
+
+
+# Finding weighted frequency for each word.
+
+roomdelTemp$wtFreq <- roomdelTemp$count * roomdelTemp$mFreq
+
+# Taking probability of the weighted Frequencies
+
+roomdelTemp$frqProb <- roomdelTemp$wtFreq/sum(roomdelTemp$wtFreq)
+
+roomdelTemp
+  
+  
+}
+
+
+
+```
+
+
+# Doing each of the template consolidation as per the function
+
+The numbers below are to check how many columns are there in the dataframe which is given to the function archeTemp
+
+```{r}
+
+names(reccodelTemp)
+
+reccodelTemp <- archeTemp(reccodelTemp,2,6)
+
+```
+
+Removing first row as it is not a word
+
+```{r}
+staffdelTemp <- staffdelTemp[-1,]
+```
+
+Sorting the words according to the probabilities
+
+```{r}
+
+reccodel <- reccodelTemp %>% arrange(desc(frqProb)) %>% select(word,frqProb)
+
+```
+
+### Step2 : AngryTemplate
+
+Room: roomAngTemp : roomAng
+Food: restAngTemp : restAng
+Restaurant: restAngTemp : restAng
+Staff: staffAngTemp : staffAng
+Lobby: No data
+Reception: receptionAngTemp  No data
+Transfer:  transferAngTemp : no data
+Facilities: facilityAngTemp : no data
+Recommend: reccoAngTemp : no data
+
+```{r}
+
+names(receptionAngTemp)
+
+receptionAngTemp <- archeTemp(receptionAngTemp,2,8)
+
+```
+
+Removing first row as it is not a word
+
+```{r}
+staffdelTemp <- staffdelTemp[-1,]
+```
+
+Sorting the words according to the probabilities
+
+```{r}
+
+receptionAngTemp <- receptionAngTemp %>% arrange(desc(frqProb)) %>% select(word,frqProb)
+
+```
+
+### Step3 : Ok Temp
+
+## Artefacts for a hotel
+
+Room: roomokTemp :roomok
+Food: resokTemp : resok
+Restaurant: resokTemp : resok
+Staff: staffokTemp ; staffok
+Lobby: lobbyokTemp : lobbyok
+Reception: recepokTemp : recepok
+Transfer: tranokTemp : No data
+Facilities:facilokTemp : facilok
+Recommend: reccokTemp : No data
+
+
+```{r}
+
+names(facilokTemp)
+
+facilokTemp <- archeTemp(facilokTemp,2,3)
+
+```
+
+
+Sorting the words according to the probabilities
+
+```{r}
+
+facilok <- facilokTemp %>% arrange(desc(frqProb)) %>% select(word,frqProb)
+
+```
+
+### Step 4 : Dissatisfied Template
+
+## Artefacts for a hotel
+
+Room: roomdisTemp : roomdis
+Food: restdisTemp : restdis
+Restaurant: restdisTemp : restdis
+Staff: staffdisTemp : staffdis
+Lobby: lobbydisTemp : No data
+Reception: recepdisTemp : No data
+Transfer: trandisTemp : No Data
+Facilities: facilitydisTemp : No Data
+Recommend: reccodisTemp : No Data
+
+
+```{r}
+
+names(staffdisTemp)
+
+staffdisTemp <- archeTemp(staffdisTemp,2,2)
+
+```
+
+
+Sorting the words according to the probabilities
+
+```{r}
+
+staffdis <- staffdisTemp %>% arrange(desc(frqProb)) %>% select(word,frqProb)
+
+```
+
+### Step 5 : Satisfied Template
+
+## Artefacts for a hotel
+
+Room: roomSatCon : roomSat
+Food: foodSatTemp : foodSat
+Restaurant: restSatTemp : restSat
+Staff: staffSatTemp : staffSat
+Lobby: lobbySatTemp : lobbySat
+Reception: receptionSatTemp : receptionSat
+Transfer: transSatTemp : No data
+Facilities: facilSatTemp : facilSat
+Recommend: reccodisTemp : No Data
+Location : locaSatTemp: locaSat
+
+
+```{r}
+
+names(locaSatTemp)
+
+locaSatTemp <- archeTemp(locaSatTemp,2,2)
+
+```
+
+
+Sorting the words according to the probabilities
+
+```{r}
+
+locaSat <- locaSatTemp %>% arrange(desc(frqProb)) %>% select(word,frqProb)
+
+```
+
+Thank Lord. The template consolidation is done.
+
+
+

@@ -304,3 +304,8 @@ locaSatTemp <- templateCreate(satTdm,'location',0.3)
 # JMJPFU
 ### 
 
+# JMJPFU
+### 30-Mar-2017
+
+Getting the templates for Satisfied
+

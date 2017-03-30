@@ -441,3 +441,16 @@ Today we will try creating the features for the project. These are the steps we 
 4. Spot checking the models
 5. Look for predictions.
 6. Fine tune the predictions by doing feature engineering.
+
+# JMJPFU
+### 30-Mar-2017
+
+Once that the templates are created. We need to create a consolidated template which will be used for similarity scoring. The process for this is as follows.
+
+1. Take a template and then get a count of the columns where there is frequency values.
+2. Multiply the counts with the average frequency of each word and get a weighted frequency
+3. Convert each of the weighted frequency into a probability space by dividing each weighted frequency with the sum of all weighted frequencies.
+4. Sort the words based on the probabilities and then filter out the non relevant ones.
+5. After this create the feature engineered data frames
+
+
