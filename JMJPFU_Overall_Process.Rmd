@@ -461,3 +461,26 @@ Once that the templates are created. We need to create a consolidated template w
 
 >>>>>>> e18546578f49926f356a8f22bef69a0901f84b42
 
+# JMJPFU
+### 5-April-2017
+
+Once the consolidated templates are created. The next task is to create feature maps for text based on the similarity measures of each template. The steps would be as follows
+
+1. Listing all the variables involved in the process
+
+roomdel, resdel,staffdel, lobbydel, recepdel, trandel,facildel,reccodel
+
+roomSat, foodSat , restSat , staffSat , lobbySat , receptionSat , facilSat, locaSat
+
+roomok, resok,staffok ,lobbyok , recepok, facilok
+
+roomdis, restdis, staffdis 
+
+roomAng,restAng,staffAng 
+
+
+2. Second process is to first take a chunk of text and then compare against each of these templates and extract the relevant similarity scores against each of these variables
+
+3. The similarity scores will thereby be populated in the feature space. 
+
+

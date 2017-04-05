@@ -1,0 +1,15 @@
+---
+title: "JMJPFU-FeatureEng"
+output: html_notebook
+---
+
+# JMJPFU
+### 5-April-2017
+
+This notebook is to do feature engineering and create the feature space. The process is as follows
+
+1. Take a chunk of text and convert it into various artefact vectors i.e ( Room, Food , Staff, facility etc). The artefact vectors will have the frequency score also. 
+
+2. For each of the template find a probability space for the artefact vector.
+3. Compare the artefact vector with the templates and find similarity score for the feature. The similarity score will be calculated by first merging the artefact vector with the template and then finding the similarity of probabilities and then finding a l2 or l1 norm. The similarity score will become the feature value.
+4. For each text find the features and then create the training set.
