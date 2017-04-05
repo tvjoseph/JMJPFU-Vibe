@@ -176,6 +176,11 @@ $(document).ready(function () {
 <h1>JMJPFU</h1>
 <div id="feb-2017" class="section level2">
 <h2>24-Feb-2017</h2>
+</div>
+<div id="artefacts-for-a-hotel" class="section level2">
+<h2>Artefacts for a hotel</h2>
+<p>Room: roomAngTemp Food: restAngTemp Restaurant: restAngTemp Staff: staffAngTemp Lobby: No data Reception: receptionAngTemp<br />
+Transfer: transferAngTemp : no data Facilities: facilityAngTemp : no data Recommend: reccoAngTemp : no data</p>
 <p>This is a template for the Angry Template. Let us proceed with the required steps.</p>
 <div id="step-1-loading-the-required-library-files" class="section level3">
 <h3>Step 1: Loading the required library files</h3>
@@ -195,9 +200,9 @@ library(tm)</code></pre>
 <h3>Step 2: Looking at the data</h3>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYW5ncnlSZXYgPC0gYW5ncnlEZiRiYWRSZXZcbmFuZ3J5UmV2WzE6Nl1cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYW5ncnlSZXYgPC0gYW5ncnlEZiRiYWRSZXZcbmFuZ3J5UmV2WzE6OF1cbmBgYCJ9 -->
 <pre class="r"><code>angryRev &lt;- angryDf$badRev
-angryRev[1:6]</code></pre>
+angryRev[1:8]</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -229,13 +234,13 @@ angryRev[1:6]</code></pre>
 <p>This is the step which needs to be followed once an intial template is created</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm9vbUFuZ1RlbXAgPC0gY29uVGVtcGxhdGUoYW5ncnlSZXYsMSw2LFwicm9vbVwiLFwiTkFcIiwwLjMsXCJmcmVxMVwiLHJvb21BbmdUZW1wKVxuYGBgIn0= -->
-<pre class="r"><code>roomAngTemp &lt;- conTemplate(angryRev,1,6,&quot;room&quot;,&quot;NA&quot;,0.3,&quot;freq1&quot;,roomAngTemp)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucm9vbUFuZ1RlbXAgPC0gY29uVGVtcGxhdGUoYW5ncnlSZXYsOSwxNixcInJvb21zXCIsXCJOQVwiLDAuMyxcImZyZXEzXCIscm9vbUFuZ1RlbXApXG5gYGAifQ== -->
+<pre class="r"><code>roomAngTemp &lt;- conTemplate(angryRev,9,16,&quot;rooms&quot;,&quot;NA&quot;,0.3,&quot;freq3&quot;,roomAngTemp)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<div id="creating-template-for-restaurant" class="section level4">
-<h4>Creating Template for Restaurant</h4>
+<div id="creating-template-for-food" class="section level4">
+<h4>Creating Template for Food</h4>
 </div>
 </div>
 </div>
@@ -243,20 +248,117 @@ angryRev[1:6]</code></pre>
 <h2>Initial template</h2>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMjIEFuZ3J5IGRhdGFcbiNhbmdyeVJldlxuIyMjIENyZWF0aW5nIGFuIGluaXRpYWwgdGVtcGxhdGUgZm9yIHRoZSBlbW90aW9uXG5yZXN0QW5nVGVtcCA8LSB0ZW1wbGF0ZUNyZWF0ZShhbmdUZG0sJ3Jlc3RhdXJhbnQnLDAuMDUpXG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyMjIEFuZ3J5IGRhdGFcbiNhbmdyeVJldlxuIyMjIENyZWF0aW5nIGFuIGluaXRpYWwgdGVtcGxhdGUgZm9yIHRoZSBlbW90aW9uXG5yZXN0QW5nVGVtcCA8LSB0ZW1wbGF0ZUNyZWF0ZShhbmdUZG0sJ2Zvb2QnLDAuMylcbmBgYCJ9 -->
 <pre class="r"><code>### Angry data
 #angryRev
 ### Creating an initial template for the emotion
-restAngTemp &lt;- templateCreate(angTdm,'restaurant',0.05)</code></pre>
+restAngTemp &lt;- templateCreate(angTdm,'food',0.3)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>The angTdm dosent have any data pertaining to restaurants. So some more data has to be collected</p>
+</div>
+</div>
+<div id="jmjpfu-1" class="section level1">
+<h1>JMJPFU</h1>
+<div id="mar-2017" class="section level3">
+<h3>28-Mar-2017</h3>
+</div>
+<div id="template-staff" class="section level3">
+<h3>Template Staff</h3>
+</div>
+<div id="process-1-initial-template-setting" class="section level3">
+<h3>Process 1 : Initial template setting</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTdGVwIDEgOiBHZXR0aW5nIHRoZSByZXZpZXcgZGF0YSBpbiBsaXN0IGZvcm1hdFxuYW5ncnlSZXYgPC0gYW5ncnlEZiRiYWRSZXZcbiMgU3RlcCAyIDogQ3JlYXRpbmcgdGhlIGluaXRpYWwgdGRtXG4gYW5nVGRtIDwtIHRkbUNyZWF0b3IoYW5ncnlSZXZbMTo0XSlcbiBcbiAjIFN0ZXAgMyA6IENyZWF0aW5nIHRoZSBpbml0aWFsIHRlbXBsYXRlXG4gXG4gc3RhZmZBbmdUZW1wIDwtIHRlbXBsYXRlQ3JlYXRlKGFuZ1RkbSwnc3RhZmYnLDAuMzApXG5gYGAifQ== -->
+<pre class="r"><code># Step 1 : Getting the review data in list format
+angryRev &lt;- angryDf$badRev
+# Step 2 : Creating the initial tdm
+ angTdm &lt;- tdmCreator(angryRev[1:4])
+ 
+ # Step 3 : Creating the initial template
+ 
+ staffAngTemp &lt;- templateCreate(angTdm,'staff',0.30)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="process-2-adding-on-to-the-initial-template" class="section level3">
+<h3>Process 2 : Adding on to the initial template</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RhZmZBbmdUZW1wIDwtIGNvblRlbXBsYXRlKGFuZ3J5UmV2LDE0LDE2LFwic3RhZmZcIixcIk5BXCIsMC4zLFwiZnJlcTZcIixzdGFmZkFuZ1RlbXApXG5gYGAifQ== -->
+<pre class="r"><code>staffAngTemp &lt;- conTemplate(angryRev,14,16,&quot;staff&quot;,&quot;NA&quot;,0.3,&quot;freq6&quot;,staffAngTemp)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="template-reception" class="section level3">
+<h3>Template Reception</h3>
+</div>
+<div id="process-1-initial-template-setting-1" class="section level3">
+<h3>Process 1 : Initial template setting</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTdGVwIDEgOiBHZXR0aW5nIHRoZSByZXZpZXcgZGF0YSBpbiBsaXN0IGZvcm1hdFxuYW5ncnlSZXYgPC0gYW5ncnlEZiRiYWRSZXZcbiMgU3RlcCAyIDogQ3JlYXRpbmcgdGhlIGluaXRpYWwgdGRtXG4gYW5nVGRtIDwtIHRkbUNyZWF0b3IoYW5ncnlSZXZbMTM6MTZdKSAjICBpcyBzZWxlY3RlZCBiZWNhdXNlLCB0aGlzIHdhcyB0aGUgZmlyc3QgbGlzdCB3aGljaCBoYWQgc29tZSB3b3JkcyBhc3NvY2lhdGVkIHdpdGggc3RhZmZcbiBcbiAjIFN0ZXAgMyA6IENyZWF0aW5nIHRoZSBpbml0aWFsIHRlbXBsYXRlXG4gXG4gcmVjZXB0aW9uQW5nVGVtcCA8LSB0ZW1wbGF0ZUNyZWF0ZShhbmdUZG0sJ3JlY2VwdGlvbicsMC4zMClcbmBgYCJ9 -->
+<pre class="r"><code># Step 1 : Getting the review data in list format
+angryRev &lt;- angryDf$badRev
+# Step 2 : Creating the initial tdm
+ angTdm &lt;- tdmCreator(angryRev[13:16]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ receptionAngTemp &lt;- templateCreate(angTdm,'reception',0.30)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="process-2-adding-on-to-the-initial-template-1" class="section level3">
+<h3>Process 2 : Adding on to the initial template</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyByZWNlcHRpb25BbmdUZW1wOiBUaGlzIGRvc2VudCBoYXZlIGFueSBkYXRhIGZvciBwcm9jZXNzIDI6XG5cbmBgYCJ9 -->
+<pre class="r"><code># receptionAngTemp: This dosent have any data for process 2:
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="template-recommend" class="section level3">
+<h3>Template Recommend</h3>
+</div>
+<div id="process-1-initial-template-setting-2" class="section level3">
+<h3>Process 1 : Initial template setting</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTdGVwIDEgOiBHZXR0aW5nIHRoZSByZXZpZXcgZGF0YSBpbiBsaXN0IGZvcm1hdFxuYW5ncnlSZXYgPC0gYW5ncnlEZiRiYWRSZXZcbiMgU3RlcCAyIDogQ3JlYXRpbmcgdGhlIGluaXRpYWwgdGRtXG4gYW5nVGRtIDwtIHRkbUNyZWF0b3IoYW5ncnlSZXZbMToxNl0pICMgIGlzIHNlbGVjdGVkIGJlY2F1c2UsIHRoaXMgd2FzIHRoZSBmaXJzdCBsaXN0IHdoaWNoIGhhZCBzb21lIHdvcmRzIGFzc29jaWF0ZWQgd2l0aCBzdGFmZlxuIFxuICMgU3RlcCAzIDogQ3JlYXRpbmcgdGhlIGluaXRpYWwgdGVtcGxhdGVcbiBcbiByZWNjb0FuZ1RlbXAgPC0gdGVtcGxhdGVDcmVhdGUoYW5nVGRtLCdyZWNjb21lbmQnLDAuMzApXG5gYGAifQ== -->
+<pre class="r"><code># Step 1 : Getting the review data in list format
+angryRev &lt;- angryDf$badRev
+# Step 2 : Creating the initial tdm
+ angTdm &lt;- tdmCreator(angryRev[1:16]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ reccoAngTemp &lt;- templateCreate(angTdm,'reccomend',0.30)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="process-2-adding-on-to-the-initial-template-2" class="section level3">
+<h3>Process 2 : Adding on to the initial template</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyByZWNlcHRpb25BbmdUZW1wOiBUaGlzIGRvc2VudCBoYXZlIGFueSBkYXRhIGZvciBwcm9jZXNzIDI6XG5cbmBgYCJ9 -->
+<pre class="r"><code># receptionAngTemp: This dosent have any data for process 2:
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpNSlBGVS1hbmdyeVRlbXBsYXRlIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KIyBKTUpQRlUNCiMjIDI0LUZlYi0yMDE3DQoNClRoaXMgaXMgYSB0ZW1wbGF0ZSBmb3IgdGhlIEFuZ3J5IFRlbXBsYXRlLiBMZXQgdXMgcHJvY2VlZCB3aXRoIHRoZSByZXF1aXJlZCBzdGVwcy4NCg0KDQojIyMgU3RlcCAxOiBMb2FkaW5nIHRoZSByZXF1aXJlZCBsaWJyYXJ5IGZpbGVzDQoNCmBgYHtyfQ0KbGlicmFyeShTbm93YmFsbEMpDQpsaWJyYXJ5KFJXZWthKQ0KbGlicmFyeShySmF2YSkNCmxpYnJhcnkoUldla2FqYXJzKQ0KbGlicmFyeSh0bSkNCmBgYA0KDQoNCiMjIyBTdGVwIDI6IExvb2tpbmcgYXQgdGhlIGRhdGENCg0KYGBge3J9DQphbmdyeVJldiA8LSBhbmdyeURmJGJhZFJldg0KYW5ncnlSZXZbMTo2XQ0KYGBgDQoNCiMjIyBTdGVwIDMgOiBDcmVhdGluZyB0aGUgdGVybSBEb2N1bWVudCBNYXRyaXgNCg0KVGhpcyBzdGVwIGlzIG9ubHkgcmVxdWlyZWQgZm9yIHRoZSBmaXJzdCB0aW1lIGEgdGVtcGxhdGUgaXMgY3JlYXRlZA0KDQpgYGB7cn0NCiBhbmdUZG0gPC0gdGRtQ3JlYXRvcihhbmdyeVJldikNCmBgYA0KDQojIyMgU3RlcCA0IDogQ3JlYXRpbmcgYW4gaW5pdGlhbCB0ZW1wbGF0ZSBmb3IgdGhlIGVtb3Rpb24NCg0KVGhpcyBzdGVwIGlzIGFsc28gcmVxdWlyZWQgdG8gYmUgZG9uZSBmb3IgdGhlIGZpcnN0IHRpbWUgYSB0ZW1wbGF0ZSBpcyBjcmVhdGVkDQoNCmBgYHtyfQ0Kcm9vbUFuZ1RlbXAgPC0gdGVtcGxhdGVDcmVhdGUoYW5nVGRtLCdyb29tcycsMC4zMCkNCmBgYA0KDQojIyMgU3RlcCA1IDogRXhwYW5kaW5nIHRoZSB0ZW1wbGF0ZQ0KDQpUaGlzIGlzIHRoZSBzdGVwIHdoaWNoIG5lZWRzIHRvIGJlIGZvbGxvd2VkIG9uY2UgYW4gaW50aWFsIHRlbXBsYXRlIGlzIGNyZWF0ZWQNCg0KYGBge3J9DQpyb29tQW5nVGVtcCA8LSBjb25UZW1wbGF0ZShhbmdyeVJldiwxLDYsInJvb20iLCJOQSIsMC4zLCJmcmVxMSIscm9vbUFuZ1RlbXApDQpgYGANCg0KIyMjIyBDcmVhdGluZyBUZW1wbGF0ZSBmb3IgUmVzdGF1cmFudA0KDQojIyBJbml0aWFsIHRlbXBsYXRlDQoNCmBgYHtyfQ0KIyMjIEFuZ3J5IGRhdGENCg0KI2FuZ3J5UmV2DQoNCiMjIyBDcmVhdGluZyBhbiBpbml0aWFsIHRlbXBsYXRlIGZvciB0aGUgZW1vdGlvbg0KDQpyZXN0QW5nVGVtcCA8LSB0ZW1wbGF0ZUNyZWF0ZShhbmdUZG0sJ3Jlc3RhdXJhbnQnLDAuMDUpDQoNCmBgYA0KDQpUaGUgYW5nVGRtIGRvc2VudCBoYXZlIGFueSBkYXRhIHBlcnRhaW5pbmcgdG8gcmVzdGF1cmFudHMuIFNvIHNvbWUgbW9yZSBkYXRhIGhhcyB0byBiZSBjb2xsZWN0ZWQNCg==</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkpNSlBGVS1hbmdyeVRlbXBsYXRlIg0Kb3V0cHV0OiBodG1sX25vdGVib29rDQotLS0NCg0KIyBKTUpQRlUNCiMjIDI0LUZlYi0yMDE3DQoNCiMjIEFydGVmYWN0cyBmb3IgYSBob3RlbA0KDQpSb29tOiByb29tQW5nVGVtcA0KRm9vZDogcmVzdEFuZ1RlbXANClJlc3RhdXJhbnQ6IHJlc3RBbmdUZW1wIA0KU3RhZmY6IHN0YWZmQW5nVGVtcCANCkxvYmJ5OiBObyBkYXRhDQpSZWNlcHRpb246IHJlY2VwdGlvbkFuZ1RlbXAgIA0KVHJhbnNmZXI6ICB0cmFuc2ZlckFuZ1RlbXAgOiBubyBkYXRhDQpGYWNpbGl0aWVzOiBmYWNpbGl0eUFuZ1RlbXAgOiBubyBkYXRhDQpSZWNvbW1lbmQ6IHJlY2NvQW5nVGVtcCA6IG5vIGRhdGENCg0KVGhpcyBpcyBhIHRlbXBsYXRlIGZvciB0aGUgQW5ncnkgVGVtcGxhdGUuIExldCB1cyBwcm9jZWVkIHdpdGggdGhlIHJlcXVpcmVkIHN0ZXBzLg0KDQoNCiMjIyBTdGVwIDE6IExvYWRpbmcgdGhlIHJlcXVpcmVkIGxpYnJhcnkgZmlsZXMNCg0KYGBge3J9DQpsaWJyYXJ5KFNub3diYWxsQykNCmxpYnJhcnkoUldla2EpDQpsaWJyYXJ5KHJKYXZhKQ0KbGlicmFyeShSV2VrYWphcnMpDQpsaWJyYXJ5KHRtKQ0KYGBgDQoNCg0KIyMjIFN0ZXAgMjogTG9va2luZyBhdCB0aGUgZGF0YQ0KDQpgYGB7cn0NCmFuZ3J5UmV2IDwtIGFuZ3J5RGYkYmFkUmV2DQphbmdyeVJldlsxOjhdDQpgYGANCg0KIyMjIFN0ZXAgMyA6IENyZWF0aW5nIHRoZSB0ZXJtIERvY3VtZW50IE1hdHJpeA0KDQpUaGlzIHN0ZXAgaXMgb25seSByZXF1aXJlZCBmb3IgdGhlIGZpcnN0IHRpbWUgYSB0ZW1wbGF0ZSBpcyBjcmVhdGVkDQoNCmBgYHtyfQ0KIGFuZ1RkbSA8LSB0ZG1DcmVhdG9yKGFuZ3J5UmV2KQ0KYGBgDQoNCiMjIyBTdGVwIDQgOiBDcmVhdGluZyBhbiBpbml0aWFsIHRlbXBsYXRlIGZvciB0aGUgZW1vdGlvbg0KDQpUaGlzIHN0ZXAgaXMgYWxzbyByZXF1aXJlZCB0byBiZSBkb25lIGZvciB0aGUgZmlyc3QgdGltZSBhIHRlbXBsYXRlIGlzIGNyZWF0ZWQNCg0KYGBge3J9DQpyb29tQW5nVGVtcCA8LSB0ZW1wbGF0ZUNyZWF0ZShhbmdUZG0sJ3Jvb21zJywwLjMwKQ0KYGBgDQoNCiMjIyBTdGVwIDUgOiBFeHBhbmRpbmcgdGhlIHRlbXBsYXRlDQoNClRoaXMgaXMgdGhlIHN0ZXAgd2hpY2ggbmVlZHMgdG8gYmUgZm9sbG93ZWQgb25jZSBhbiBpbnRpYWwgdGVtcGxhdGUgaXMgY3JlYXRlZA0KDQpgYGB7cn0NCnJvb21BbmdUZW1wIDwtIGNvblRlbXBsYXRlKGFuZ3J5UmV2LDksMTYsInJvb21zIiwiTkEiLDAuMywiZnJlcTMiLHJvb21BbmdUZW1wKQ0KYGBgDQoNCiMjIyMgQ3JlYXRpbmcgVGVtcGxhdGUgZm9yIEZvb2QNCg0KIyMgSW5pdGlhbCB0ZW1wbGF0ZQ0KDQpgYGB7cn0NCiMjIyBBbmdyeSBkYXRhDQoNCiNhbmdyeVJldg0KDQojIyMgQ3JlYXRpbmcgYW4gaW5pdGlhbCB0ZW1wbGF0ZSBmb3IgdGhlIGVtb3Rpb24NCg0KcmVzdEFuZ1RlbXAgPC0gdGVtcGxhdGVDcmVhdGUoYW5nVGRtLCdmb29kJywwLjMpDQoNCiMjIFN1YnNlcXVlbnQgdGVtcGxhdGUgZm9yIGZvb2QNCg0KcmVzdEFuZ1RlbXAgPC0gY29uVGVtcGxhdGUoYW5ncnlSZXYsOSwxNiwiZm9vZCIsIk5BIiwwLjMsImZyZXEyIixyZXN0QW5nVGVtcCkNCg0KYGBgDQoNCiMgSk1KUEZVDQojIyMgMjgtTWFyLTIwMTcNCg0KIyMjIFRlbXBsYXRlIFN0YWZmDQoNCiMjIyBQcm9jZXNzIDEgOiBJbml0aWFsIHRlbXBsYXRlIHNldHRpbmcNCg0KYGBge3J9DQoNCiMgU3RlcCAxIDogR2V0dGluZyB0aGUgcmV2aWV3IGRhdGEgaW4gbGlzdCBmb3JtYXQNCg0KYW5ncnlSZXYgPC0gYW5ncnlEZiRiYWRSZXYNCg0KIyBTdGVwIDIgOiBDcmVhdGluZyB0aGUgaW5pdGlhbCB0ZG0NCg0KIGFuZ1RkbSA8LSB0ZG1DcmVhdG9yKGFuZ3J5UmV2WzRdKSAjIDQgaXMgc2VsZWN0ZWQgYmVjYXVzZSwgdGhpcyB3YXMgdGhlIGZpcnN0IGxpc3Qgd2hpY2ggaGFkIHNvbWUgd29yZHMgYXNzb2NpYXRlZCB3aXRoIHN0YWZmDQogDQogIyBTdGVwIDMgOiBDcmVhdGluZyB0aGUgaW5pdGlhbCB0ZW1wbGF0ZQ0KIA0KIHN0YWZmQW5nVGVtcCA8LSB0ZW1wbGF0ZUNyZWF0ZShhbmdUZG0sJ3N0YWZmJywwLjMwKQ0KDQoNCmBgYA0KDQojIyMgUHJvY2VzcyAyIDogQWRkaW5nIG9uIHRvIHRoZSBpbml0aWFsIHRlbXBsYXRlDQoNCg0KYGBge3J9DQoNCnN0YWZmQW5nVGVtcCA8LSBjb25UZW1wbGF0ZShhbmdyeVJldiwxNCwxNiwic3RhZmYiLCJOQSIsMC4zLCJmcmVxNiIsc3RhZmZBbmdUZW1wKQ0KYGBgDQoNCg0KIyMjIFRlbXBsYXRlIFJlY2VwdGlvbg0KDQojIyMgUHJvY2VzcyAxIDogSW5pdGlhbCB0ZW1wbGF0ZSBzZXR0aW5nDQoNCmBgYHtyfQ0KDQojIFN0ZXAgMSA6IEdldHRpbmcgdGhlIHJldmlldyBkYXRhIGluIGxpc3QgZm9ybWF0DQoNCmFuZ3J5UmV2IDwtIGFuZ3J5RGYkYmFkUmV2DQoNCiMgU3RlcCAyIDogQ3JlYXRpbmcgdGhlIGluaXRpYWwgdGRtDQoNCiBhbmdUZG0gPC0gdGRtQ3JlYXRvcihhbmdyeVJldlsxMzoxNl0pICMgIGlzIHNlbGVjdGVkIGJlY2F1c2UsIHRoaXMgd2FzIHRoZSBmaXJzdCBsaXN0IHdoaWNoIGhhZCBzb21lIHdvcmRzIGFzc29jaWF0ZWQgd2l0aCBzdGFmZg0KIA0KICMgU3RlcCAzIDogQ3JlYXRpbmcgdGhlIGluaXRpYWwgdGVtcGxhdGUNCiANCiByZWNlcHRpb25BbmdUZW1wIDwtIHRlbXBsYXRlQ3JlYXRlKGFuZ1RkbSwncmVjZXB0aW9uJywwLjMwKQ0KDQoNCmBgYA0KDQojIyMgUHJvY2VzcyAyIDogQWRkaW5nIG9uIHRvIHRoZSBpbml0aWFsIHRlbXBsYXRlDQoNCg0KYGBge3J9DQojIHJlY2VwdGlvbkFuZ1RlbXA6IFRoaXMgZG9zZW50IGhhdmUgYW55IGRhdGEgZm9yIHByb2Nlc3MgMjoNCg0KYGBgDQoNCiMjIyBUZW1wbGF0ZSBSZWNvbW1lbmQNCg0KIyMjIFByb2Nlc3MgMSA6IEluaXRpYWwgdGVtcGxhdGUgc2V0dGluZw0KDQpgYGB7cn0NCg0KIyBTdGVwIDEgOiBHZXR0aW5nIHRoZSByZXZpZXcgZGF0YSBpbiBsaXN0IGZvcm1hdA0KDQphbmdyeVJldiA8LSBhbmdyeURmJGJhZFJldg0KDQojIFN0ZXAgMiA6IENyZWF0aW5nIHRoZSBpbml0aWFsIHRkbQ0KDQogYW5nVGRtIDwtIHRkbUNyZWF0b3IoYW5ncnlSZXZbMToxNl0pICMgIGlzIHNlbGVjdGVkIGJlY2F1c2UsIHRoaXMgd2FzIHRoZSBmaXJzdCBsaXN0IHdoaWNoIGhhZCBzb21lIHdvcmRzIGFzc29jaWF0ZWQgd2l0aCBzdGFmZg0KIA0KICMgU3RlcCAzIDogQ3JlYXRpbmcgdGhlIGluaXRpYWwgdGVtcGxhdGUNCiANCiByZWNjb0FuZ1RlbXAgPC0gdGVtcGxhdGVDcmVhdGUoYW5nVGRtLCdyZWNjb21lbmQnLDAuMzApDQoNCg0KYGBgDQoNCiMjIyBQcm9jZXNzIDIgOiBBZGRpbmcgb24gdG8gdGhlIGluaXRpYWwgdGVtcGxhdGUNCg0KDQpgYGB7cn0NCiMgcmVjZXB0aW9uQW5nVGVtcDogVGhpcyBkb3NlbnQgaGF2ZSBhbnkgZGF0YSBmb3IgcHJvY2VzcyAyOg0KDQpgYGANCg0K</div>
 
 
 

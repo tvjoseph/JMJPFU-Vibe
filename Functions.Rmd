@@ -103,6 +103,13 @@ The below is an overencompassing function which integrates lots of functions and
 
 conTemplate <- function(scrRev,num1,num2,char1,char2,num3,name1,charEmoCon){
   
+  
+library(SnowballC)
+library(RWeka)
+library(rJava)
+library(RWekajars)
+library(tm) 
+  
   # scrRev : This is the text which is scrapped from the net
   # num1, num2 : There are the anchor points of the text i.e start point of the text and end point of the text
   # char1 : This is the artefact of the domain which needs to be passed to create the termDocumentmatrix data frame
@@ -131,7 +138,7 @@ charEmoTemp1 <- rbind(charEmoTemp1,charEmoTemp2)
 
 # Consolidating the final document with merge
 
-charEmoCon <- merge(charEmoCon,charEmoTemp1,all = TRUE) # roomSatCon > charEmoCon
+charEmoCon <- merge(charEmoCon,charEmoTemp1,all = TRUE ) # roomSatCon > charEmoCon
 
 
 return(charEmoCon) # Returning the consolidated dataframe

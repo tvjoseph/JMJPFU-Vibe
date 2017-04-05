@@ -1,0 +1,275 @@
+---
+title: "JMJPFU-Template"
+output: html_notebook
+---
+
+# JMJPFU
+### 29-Mar-2017
+
+This is the OK template for all artefacts
+
+## Artefacts for a hotel
+
+Room: roomokTemp
+Food: resokTemp
+Restaurant: resokTemp
+Staff: staffokTemp
+Lobby: lobbyokTemp 
+Reception: recepokTemp
+Transfer: tranokTemp : No data
+Facilities:facilokTemp
+Recommend: reccokTemp : No data
+
+### Initial tasks : Loading the library files
+
+```{r}
+library(SnowballC)
+library(RWeka)
+library(rJava)
+library(RWekajars)
+library(tm)
+
+```
+
+### Template 1 : Room
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+okRev <- okDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ okTdm <- tdmCreator(okRev[1:20]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ roomokTemp <- templateCreate(okTdm,'room',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+roomokTemp <- conTemplate(okRev,21,33,"room","rooms",0.3,"freq1",roomokTemp)
+
+```
+
+
+### Template 2 : Food/Restaurant
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+okRev <- okDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ okTdm <- tdmCreator(okRev[1:20]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ resokTemp <- templateCreate(okTdm,'food',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+resokTemp <- conTemplate(okRev,21,33,"food","restaurant",0.3,"freq1",resokTemp)
+
+```
+
+
+### Template 3 : Staff
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+okRev <- okDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ okTdm <- tdmCreator(okRev[1:20]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ staffokTemp <- templateCreate(okTdm,'staff',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+staffokTemp <- conTemplate(okRev,21,33,"staff","NA",0.3,"freq1",staffokTemp)
+
+```
+
+### Template 4 : Lobby
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+okRev <- okDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ okTdm <- tdmCreator(okRev[1:20]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ lobbyokTemp <- templateCreate(okTdm,'lobby',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+lobbyokTemp <- conTemplate(okRev,21,33,"lobby","NA",0.3,"freq1",lobbyokTemp)
+
+```
+
+### Template 5 : Reception
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+okRev <- okDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ okTdm <- tdmCreator(okRev[1:20]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ recepokTemp <- templateCreate(okTdm,'reception',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+recepokTemp <- conTemplate(okRev,21,33,"reception","NA",0.3,"freq1",recepokTemp)
+
+```
+
+### Template 6 : Transfer
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+okRev <- okDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ okTdm <- tdmCreator(okRev[1:33]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ tranokTemp <- templateCreate(okTdm,'transfer',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+tranokTemp <- conTemplate(okRev,21,33,"transfer","NA",0.3,"freq1",tranokTemp)
+
+```
+
+
+### Template 7 : Facility
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+okRev <- okDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ okTdm <- tdmCreator(okRev[1:20]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ facilokTemp <- templateCreate(okTdm,'facility',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+facilokTemp <- conTemplate(okRev,21,33,"facility","facilities",0.3,"freq1",facilokTemp)
+
+```
+
+### Template 8 : Recommend
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+okRev <- okDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ okTdm <- tdmCreator(okRev[1:33]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ reccokTemp <- templateCreate(okTdm,'recommend',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+reccokTemp <- conTemplate(okRev,21,33,"recommend","NA",0.3,"freq1",reccokTemp)
+
+```

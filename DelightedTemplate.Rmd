@@ -1,0 +1,290 @@
+---
+title: "JMJPFU-Template"
+output: html_notebook
+---
+
+# JMJPFU
+### 29-Mar-2017
+
+This is a template for Delight
+
+
+## Artefacts for a hotel
+
+Room: roomdelTemp
+Food: resdelTemp
+Restaurant: resdelTemp
+Staff: staffdelTemp
+Lobby: lobbydelTemp 
+Reception: recepdelTemp
+Transfer: trandelTemp
+Facilities:facildelTemp
+Recommend: reccodelTemp
+
+### Initial tasks : Loading the library files
+
+```{r}
+library(SnowballC)
+library(RWeka)
+library(rJava)
+library(RWekajars)
+library(tm)
+
+```
+
+
+### Template 1 : Room
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+delightRev <- delightDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ delightTdm <- tdmCreator(delightRev[1:40]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ roomdelTemp <- templateCreate(delightTdm,'room',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+roomdelTemp <- conTemplate(delightRev,131,149,"room","rooms",0.3,"freq4",roomdelTemp)
+
+
+```
+
+
+# JMJPFU
+### 29-Mar-2017 
+
+### Template 2 : Food / Restaurant
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+delightRev <- delightDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ delightTdm <- tdmCreator(delightRev[1:40]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ resdelTemp <- templateCreate(delightTdm,'food',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+resdelTemp <- conTemplate(delightRev,131,149,"food","restaurant",0.3,"freq4",resdelTemp)
+
+
+```
+
+
+### Template 3 : Staff
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+delightRev <- delightDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ delightTdm <- tdmCreator(delightRev[1:40]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ staffdelTemp <- templateCreate(delightTdm,'staff',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+staffdelTemp <- conTemplate(delightRev,131,149,"staff","NA",0.3,"freq4",staffdelTemp)
+
+
+```
+
+
+### Template 4 : Lobby
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+delightRev <- delightDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ delightTdm <- tdmCreator(delightRev[1:40]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ lobbydelTemp <- templateCreate(delightTdm,'lobby',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+lobbydelTemp <- conTemplate(delightRev,131,149,"lobby","NA",0.3,"freq4",lobbydelTemp)
+
+
+```
+
+### Template 5 : Reception
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+delightRev <- delightDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ delightTdm <- tdmCreator(delightRev[1:40]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ recepdelTemp <- templateCreate(delightTdm,'reception',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+recepdelTemp <- conTemplate(delightRev,131,149,"reception","NA",0.3,"freq4",recepdelTemp)
+
+
+```
+
+
+### Template 6 : Transfer
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+delightRev <- delightDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ delightTdm <- tdmCreator(delightRev[1:40]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ trandelTemp <- templateCreate(delightTdm,'transfer',0.30)
+
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+trandelTemp <- conTemplate(delightRev,131,149,"transfer","NA",0.3,"freq4",trandelTemp)
+
+```
+
+
+### Template 7 : Facilities
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+delightRev <- delightDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ delightTdm <- tdmCreator(delightRev[1:70]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ facildelTemp <- templateCreate(delightTdm,'facility',0.30)
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+facildelTemp <- conTemplate(delightRev,131,149,"facility","facilities",0.3,"freq3",facildelTemp)
+
+```
+
+
+
+### Template 8 : Reccomend
+
+### Process 1 : Initial template setting
+
+```{r}
+
+# Step 1 : Getting the review data in list format
+
+delightRev <- delightDf$badRev
+
+# Step 2 : Creating the initial tdm
+
+ delightTdm <- tdmCreator(delightRev[1:40]) #  is selected because, this was the first list which had some words associated with staff
+ 
+ # Step 3 : Creating the initial template
+ 
+ reccodelTemp <- templateCreate(delightTdm,'recommend',0.30)
+
+```
+
+### Process 2 : Adding on to the initial template
+
+
+```{r}
+
+reccodelTemp <- conTemplate(delightRev,131,149,"recommend","NA",0.3,"freq4",reccodelTemp)
+
+```
+
+
+

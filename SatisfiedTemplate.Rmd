@@ -301,3 +301,11 @@ locaSatTemp <- templateCreate(satTdm,'location',0.3)
 
 >>>>>>> 88682ad679bceb9929802040651ba0a10d9ee3af
 
+# JMJPFU
+### 
+
+# JMJPFU
+### 30-Mar-2017
+
+Getting the templates for Satisfied
+
