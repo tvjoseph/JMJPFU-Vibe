@@ -368,3 +368,8 @@ Today let us try some other hotel URL and try to get more data for classificatio
 ### 26-Mar-2017
 
 Lord bless this venture with your Grace and Wisdom.
+
+```{r}
+hotelData[160:165]
+```
+
