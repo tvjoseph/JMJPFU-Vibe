@@ -13,3 +13,148 @@ This notebook is to do feature engineering and create the feature space. The pro
 2. For each of the template find a probability space for the artefact vector.
 3. Compare the artefact vector with the templates and find similarity score for the feature. The similarity score will be calculated by first merging the artefact vector with the template and then finding the similarity of probabilities and then finding a l2 or l1 norm. The similarity score will become the feature value.
 4. For each text find the features and then create the training set.
+
+# JMJPFU
+### 10-April-2017
+
+### Initial tasks : Loading Library Files
+
+```{r}
+library(rvest)
+library(dplyr)
+library(tm)
+library(ngram)
+library(stringr)
+library(wordcloud)
+```
+
+
+### Experiment 1 : Taking a text and converting into the artefact related templates
+
+Artefacts 
+
+Room, Food, Restaurant, Staff, Lobby, Reception,Transfer,Facilities, Recommend.
+
+```{r}
+
+# Step1 :Taking the relevant text: Filtering out data with class 0
+hotelText <- hoteldatDf %>% filter(class != 0) 
+
+# Step 2 : Creating the initial tdm for the first text
+
+ analTdm <- tdmCreator(hotelText[1:1])
+ 
+ # Step 3 : Creating the initial template
+ 
+ compTemplate <- templateCreate(analTdm,'room',0.30) 
+
+ # Step 4 : Take the relevant template of the artefact and do the merge
+ 
+ delCompare <- merge(roomdel,compTemplate,all.x = TRUE)
+ 
+ # Step 5 : Find a consolidated score
+ 
+ conScore <- sum(delCompare[,2]*delCompare[,3],na.rm = TRUE)
+
+```
+
+Thank you Lord for the insights during the experiment.
+
+Now to create a function to handle this feature engineering task. The process of the function should be as follows
+
+1. Provide the text data frame as an input to the function
+2. Create an empty data frame whose number of rows is equivalent to the text which is to be analysed. The columns will be equivalent to the number of templates for each of the artefacts
+3. Take each text and then calculate the frequency and association scores for each artefact.
+4. Compare the frequency score with each template for the archetype and calculate the similarity score. 
+5. The similarity score will form the consolidated number which will go against the empty data frame.
+
+
+```{r}
+
+similFeat <- function(textDf){
+  
+  # textDf is the dataframe which is fed to the function to extract features
+  
+  # Finding the number of rows of the data frame
+  nrw <- nrow(textDf)
+  # Defining the empty data frame
+  featDf <- data.frame(matrix(nrow=nrw,ncol=45)) ##** This can be revised. The number of columns may need revision
+  # Start a for loop to loop over all the text data
+  
+  # Creating another function internally to do the feature calculation
+  featCreate <- function(analTdm,arte,thresh,template){
+    # analTdm : This is the TDM which is passed internally in the function
+    # arte : This is the aretefact which is passed as a charachter eg. "room"
+    # thresh : This is the threshold for the association like 0.3. This can be custom provided
+    # template : This is the template which is required to be given for comparison
+    
+    #Creating the initial template
+ 
+    compTemplate <- templateCreate(analTdm,arte,thresh) 
+    
+    if(nrow(compTemplate) > 0){
+      
+      # Take the delight template of the artefact and do the merge only if the template has any data
+      
+      delCompare <- merge(template,compTemplate,all.x = TRUE)
+      
+      conScore <- sum(delCompare[,2]*delCompare[,3],na.rm = TRUE)
+    }else{
+      
+      conScore <- 0 
+    } # End of the if condition
+    
+    conScore # return the consolidated score
+  } # End of the function
+  
+  
+  
+  for(i in 1:nrw){
+    
+    #Step 1 : Creating the initial tdm for the first text
+
+    analTdm <- tdmCreator(textDf[i:i])
+    
+    ### Creating templates for Room
+    
+    featDf[i,1] <- featCreate(analTdm,'room',0.3,roomdel) # Delight
+    featDf[i,2] <- featCreate(analTdm,'room',0.3,roomSat) # Satisfied
+    featDf[i,3] <- featCreate(analTdm,'room',0.3,roomok) # OK
+    featDf[i,4] <- featCreate(analTdm,'room',0.3,roomdis) # Dissatisfied
+    featDf[i,5] <- featCreate(analTdm,'room',0.3,roomAng) # Angry
+    
+     ### Creating templates for Food
+    
+    featDf[i,6] <- featCreate(analTdm,'food',0.3,resdel) # Delight
+    featDf[i,7] <- featCreate(analTdm,'food',0.3,foodSat) # Satisfied
+    featDf[i,8] <- featCreate(analTdm,'food',0.3,resok) # OK
+    featDf[i,9] <- featCreate(analTdm,'food',0.3,restdis) # Dissatisfied
+    featDf[i,10] <- featCreate(analTdm,'food',0.3,restAng) # Angry
+    
+    ### Creating templates for Restaurant
+    
+    featDf[i,11] <- featCreate(analTdm,'restaurant',0.3,resdel) # Delight
+    featDf[i,12] <- featCreate(analTdm,'restaurant',0.3,restSat) # Satisfied
+    featDf[i,13] <- featCreate(analTdm,'restaurant',0.3,resok) # OK
+    featDf[i,14] <- featCreate(analTdm,'restaurant',0.3,restdis) # Dissatisfied
+    featDf[i,15] <- featCreate(analTdm,'restaurant',0.3,restAng) # Angry
+    
+ 
+    
+ 
+ 
+ 
+    
+    
+  } # End of the for loop for looping over the text data
+  
+  
+  names(featDf) <- c("roomdel","roomSat","roomok","roomdis","roomAng","resdel","foodSat","resok","restdis","restAng","resdel","restSat","resok","restdis","restAng")
+  
+}
+
+```
+
+# Tomorrow
+
+Continue with the rest of the function and the template
