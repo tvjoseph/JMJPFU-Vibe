@@ -79,7 +79,13 @@ similFeat <- function(textDf){
   nrw <- nrow(textDf)
   # Defining the empty data frame
   featDf <- data.frame(matrix(nrow=nrw,ncol=45)) ##** This can be revised. The number of columns may need revision
-  # Start a for loop to loop over all the text data
+  # Creating the term document matrix for the text
+  
+  analTdm <- tdmCreator(textDf[3,1])
+  
+  
+   # Start a for loop to loop over all the text data
+  
   
   # Creating another function internally to do the feature calculation
   featCreate <- function(analTdm,arte,thresh,template){
@@ -111,9 +117,6 @@ similFeat <- function(textDf){
   
   for(i in 1:nrw){
     
-    #Step 1 : Creating the initial tdm for the first text
-
-    analTdm <- tdmCreator(textDf[i:i])
     
     ### Creating templates for Room
     
@@ -123,6 +126,7 @@ similFeat <- function(textDf){
     featDf[i,4] <- featCreate(analTdm,'room',0.3,roomdis) # Dissatisfied
     featDf[i,5] <- featCreate(analTdm,'room',0.3,roomAng) # Angry
     
+    #print("room")
      ### Creating templates for Food
     
     featDf[i,6] <- featCreate(analTdm,'food',0.3,resdel) # Delight
@@ -131,6 +135,7 @@ similFeat <- function(textDf){
     featDf[i,9] <- featCreate(analTdm,'food',0.3,restdis) # Dissatisfied
     featDf[i,10] <- featCreate(analTdm,'food',0.3,restAng) # Angry
     
+    #print("Food")
     ### Creating templates for Restaurant
     
     featDf[i,11] <- featCreate(analTdm,'restaurant',0.3,resdel) # Delight
@@ -139,22 +144,185 @@ similFeat <- function(textDf){
     featDf[i,14] <- featCreate(analTdm,'restaurant',0.3,restdis) # Dissatisfied
     featDf[i,15] <- featCreate(analTdm,'restaurant',0.3,restAng) # Angry
     
- 
+    #print("restaurant")
     
- 
- 
- 
+    ### Creating templates for Staff
     
+    featDf[i,16] <- featCreate(analTdm,'staff',0.3,staffdel) # Delight
+    featDf[i,17] <- featCreate(analTdm,'staff',0.3,staffSat) # Satisfied
+    featDf[i,18] <- featCreate(analTdm,'staff',0.3,staffok) # OK
+    featDf[i,19] <- featCreate(analTdm,'staff',0.3,staffdis) # Dissatisfied
+    featDf[i,20] <- featCreate(analTdm,'staff',0.3,staffAng) # Angry
     
-  } # End of the for loop for looping over the text data
+    #print("staff")
+    ### Creating templates for Lobby
+    
+    featDf[i,21] <- featCreate(analTdm,'lobby',0.3,lobbydel) # Delight
+    featDf[i,22] <- featCreate(analTdm,'lobby',0.3,lobbySat) # Satisfied
+    featDf[i,23] <- featCreate(analTdm,'lobby',0.3,lobbyok) # OK
+    #featDf[i,24] <- featCreate(analTdm,'lobby',0.3,staffdis) # Dissatisfied - No template for now
+    # featDf[i,25] <- featCreate(analTdm,'lobby',0.3,staffAng) # Angry - No template for now
+    
+    #print("lobby")
+ 
+    ### Creating templates for Reception
+    
+    featDf[i,24] <- featCreate(analTdm,'reception',0.3,recepdel) # Delight
+    featDf[i,25] <- featCreate(analTdm,'reception',0.3,receptionSat) # Satisfied
+    featDf[i,26] <- featCreate(analTdm,'reception',0.3,recepok) # OK
+    # featDf[i,27] <- featCreate(analTdm,'reception',0.3,staffdis) # Dissatisfied - No template
+    # featDf[i,28] <- featCreate(analTdm,'reception',0.3,staffAng) # Angry - No Template
+    
+    #print("reception")
+    ### Creating templates for Transfer
+    
+    featDf[i,27] <- featCreate(analTdm,'transfer',0.3,trandel) # Delight
+    #featDf[i,28] <- featCreate(analTdm,'transfer',0.3,receptionSat) # Satisfied - Not template
+    # featDf[i,29] <- featCreate(analTdm,'transfer',0.3,recepok) # OK - No Template
+    # featDf[i,27] <- featCreate(analTdm,'transfer',0.3,staffdis) # Dissatisfied - No template
+    # featDf[i,28] <- featCreate(analTdm,'transfer',0.3,staffAng) # Angry - No Template
+  
+    #print("transfer")
+    ### Creating templates for Facilities
+    
+    featDf[i,28] <- featCreate(analTdm,'facilities',0.3,facildel) # Delight
+    featDf[i,29] <- featCreate(analTdm,'facilities',0.3,facilSat) # Satisfied
+    featDf[i,30] <- featCreate(analTdm,'facilities',0.3,facilok) # OK 
+    # featDf[i,27] <- featCreate(analTdm,'facilities',0.3,staffdis) # Dissatisfied - No template
+    # featDf[i,28] <- featCreate(analTdm,'facilities',0.3,staffAng) # Angry - No Template
+    
+    #print("facilities")
+     ### Creating templates for Recomend
+    
+    featDf[i,31] <- featCreate(analTdm,'recommend',0.3,reccodel) # Delight
+    # featDf[i,32] <- featCreate(analTdm,'recommend',0.3,facilSat) # Satisfied - No template
+    # featDf[i,33] <- featCreate(analTdm,'recommend',0.3,facilok) # OK - No Template
+    # featDf[i,27] <- featCreate(analTdm,'recommend',0.3,staffdis) # Dissatisfied - No template
+    # featDf[i,28] <- featCreate(analTdm,'recommend',0.3,staffAng) # Angry - No Template
+    
+    #print("recommend")
+    
+    } # End of the for loop for looping over the text data
   
   
-  names(featDf) <- c("roomdel","roomSat","roomok","roomdis","roomAng","resdel","foodSat","resok","restdis","restAng","resdel","restSat","resok","restdis","restAng")
   
-}
+  names(featDf) <- c("roomdel","roomSat","roomok","roomdis","roomAng","resdel","foodSat","resok","restdis","restAng","resdel","restSat","resok","restdis","restAng","staffdel","staffSat","staffok","staffdis","staffAng","lobbydel","lobbySat","lobbyok","recepdel","receptionSat","recepok","trandel","facildel","facilSat","facilok","reccodel")
+  
+  # Returns the featDF data frame
+  
+  featDf 
+} # End of the function
 
 ```
 
+# JMJPFU
+### 11-Apr-2017
+
+Lest now test the feature engineering function
+
+```{r}
+hotelDat <- hotelText %>% select(hoteldatDf)
+
+featDf <- similFeat(hotelDat)
+```
+
+# JMJPFU
+### 12-April-2017
+
+So from the experiment, the approach of finding the term document association with the current method is flawed. What needs to be done for comparison of the template with each document is to do it with the ngram model.
+
+The process should be as follows
+
+1. Find all 6 word n-gram.
+2. Take out only those n-grams which have the archetypes in it. 
+3. Look for the words which occur in the n-gram within each word distance i.e give a rating to a word which is adjacent to the archetype, one word away, two word away etc to each archetypes.
+4. 
+
+### Experiment 2 : For creating n-gram from the Text
+
+```{r}
+# Taking a text at a time
+
+tempText <- hotelText$hoteldatDf[1]
+
+# Converting all the list elements to a dataframe
+textDf <- do.call("rbind",lapply(tempText,as.data.frame)) # hiltSatisfacDf > textDf
+# Converting the factors to character
+textDf <- data.frame(lapply(textDf,as.character),stringsAsFactors = FALSE)
+# Providing a name to the text column
+names(textDf) <- "text"
+# Converting this into a corpus  
+textCorp <- Corpus(VectorSource(textDf$text)) #  hiltSatCorp > textCorp 
+
+# textCorp <- textDf$text
+
+#textCorp <- tm_map(textCorp, PlainTextDocument)
+
+# Converting to lowercase
+textCorp <- tm_map(textCorp,tolower) # yes
+
+textCorp <- tm_map(textCorp,removeWords,c("the","was","i","at","a","when","is","and","has","for","of","are","to","an","it","in","be","if","on","since","as","had","so","he","him","me","her","she","its","that","its","been","he","there"))
+
+#textCorp <- tm_map(textCorp,removeWords,stopwords('english'))
+# Remove punctuations
+textCorp <- tm_map(textCorp,removePunctuation)
+# Remove numbers
+textCorp <- tm_map(textCorp,removeNumbers)
+# Remove whitespace
+textCorp <- tm_map(textCorp,stripWhitespace)
+
+# Removing stopwords
+#stopwords_regex = paste(stopwords('en'), collapse = '\\b|\\b')
+#stopwords_regex = paste0('\\b', stopwords_regex, '\\b')
+
+#textCorp = stringr::str_replace_all(textCorp, stopwords_regex, '')
+
+#
+
+
+# Doing the stemming
+#textCorp <- tm_map(textCorp,stemDocument)
+# Converting the text to Plaintext
+ #textCorp <- tm_map(textCorp, PlainTextDocument)
+# Converting to a corpus for making TDM
+## Experiments
+
+
+
+textCorp1 <- inspect(textCorp)[[1]]
+
+#textCop1 <- textCorp[1]
+# Creating required ngram 
+textNgram <- get.ngrams(ngram(textCorp1,n=6))
+
+ngramDf <- data.frame(textNgram)
+
+
+```
+
+Now to split the ngram and remove empty spaces and store each word in new column. 
+
+Another observation is only when the whitespace was stripped, the ngram worked well without any hitches
+
+```{r}
+
+# Below will split each ngram into different words
+tesStr <- str_split(ngramDf[1,1],pattern = " ")
+
+# The below will let us know the number of words in the string
+
+length(tesStr[[1]])
+
+# Let us try some grep functions to get the archetypes we want
+
+tesGrep <- grep("room*",ngramDf$textNgram,value = TRUE)
+
+tesGrep <- grep(c("food*","restaurant*"),ngramDf$textNgram,value = TRUE)
+# Next we calculate the weights of each word from the archetype based on the distance from archetype
+
+```
+Thank you Lord for the progress so far.
+
 # Tomorrow
 
-Continue with the rest of the function and the template
+Calculation of the weights and then the distance scores to find good associations.
