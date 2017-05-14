@@ -190,7 +190,9 @@ for(i in 1: sentLength){
     } # End of the first if loop for foodMatch
   
   
+  ################## $$$$$$$$$$$$$$$
   
+  # At this point, enter the overall sentiment of the food search
   
   
   
@@ -201,4 +203,8 @@ for(i in 1: sentLength){
 
 
 ```
+# Tomorrow
 
+1. Create a function for the aspect - sentiment search and the DAG updater
+2. Update the DAG score in a data frame. Based on the number of positive words create a feature for the update
+3. Create DAG updater for all sentiments
