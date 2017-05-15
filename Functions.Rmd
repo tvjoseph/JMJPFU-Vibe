@@ -152,9 +152,135 @@ return(charEmoCon) # Returning the consolidated dataframe
 ```
 
 
+#JMJPFU
+### 15-May-2017
 
+## Function 4 : Recursive scanning function
 
+This function is to recursively scan the text files and create relevant features
 
+```{r}
+
+recScanner <- function(cleantxtSplit,aspect){
+  
+  # CleantxtSplit : This is the text which needs to be recursively scanned
+  # aspect : This is a charachter which is checked to find out the right aspect
+  # foodDict : This is the dictionary if the aspect is food
+  ### Body of the function ###
+  
+  dagLen <- length(cleantxtSplit) # Find the length of the text to be recursively scanned
+  
+  # Checking if there are any intersecting items from respective aspect Dictionary
+  
+  ## change : foodMatch => aspectMatch
+  
+  # Doing a intersect to find the matching words in the passed text with the dictionary
+  
+  if(aspect == "food"){aspectMatch <- intersect(cleantxtSplit,foodDict)  }else if(aspect == "ambience" ){aspectMatch <- intersect(cleantxtSplit,ambDict)}else if(aspect == "service"){aspectMatch <- intersect(cleantxtSplit,serDict) }else if(aspect == "price"){aspectMatch <- intersect(cleantxtSplit,pricDict)}
+    
+  # Find the index of the matching text
+  
+  if(length(aspectMatch) > 0){  
+    
+    # Find the index of the aspect in the original text.The result of the below is a list of index for matching           words in the dictionary. If the match is found the index is listed there. Else we get only NA's 
+    
+    matchId <- match(aspectMatch,cleantxtSplit)
+    
+    # The below code is to get only the Non NA id's
+    
+    matchId <- matchId[!is.na(matchId)] 
+  
+    ########## Next start the recursive checking for sentiment from the sentiment dictionary #####
+    
+    if(length(matchId) > 0){ 
+      
+      # Find the total number of indexes where the dictionary is matching
+      
+      indLen <- length(matchId)
+      
+      # Start a for loop to recursively start another scanning of text from the index of matching aspect in the text
+  
+      for(j in 1:indLen){
+        
+        # Start a empty data frame to store the DAGs for each index
+        
+        dagStore <- data.frame(matrix(nrow=indLen,ncol=1))
+        
+        # Getting the first index and Incrementing the index number so that it starts comparing with the next word            onward
+        
+        tempInd <- matchId[j] + 1
+        
+        # Initializing a neutral polarity as default to the Dag polarity tagger
+        
+        recDag <- "N" 
+        
+        # Now starting a while index so that the index recursively passess through the DAG
+        
+        while(tempInd <= dagLen){
+          
+          # Finding the polarity recursively for the relevant word in the text
+          
+          if(length(intersect(cleantxtSplit[tempInd],postDic)) > 0){recPost <- "P"}else if(length(intersect(cleantxtSplit[tempInd],negDic)) > 0){recDag <- "Ne" }else{recPost <- "N"}
+  
+          # Based on the polarity of the word the DAG is updated for polarity
+        
+        if(recPost == "P" & recDag == "N"){recDag <- "P"}else if(recPost == "Ne" & recDag == "N"){recDag <- "Ne"}else if(recPost == "N" & recDag == "N"){recDag <- "N"}else if(recPost == "P" & recDag == "P"){recDag <- "P"}else if(recPost == "Ne" & recDag == "P" ){recDag == "Ne"}else if(recPost == "N" & recDag == "P"){recDag <- "P"}else{recDag == "Ne"}
+          
+          # Incrementing the tempInd inside the loop
+          
+          tempInd <- tempInd + 1 
+          
+          # Checking if we have reached any other aspect. This section needs to be updated based on the new aspects             which will get introduced
+        
+          asCheck <- length(intersect(cleantxtSplit[tempInd],ambDict))
+          if(asCheck > 0){break}
+          asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
+          if(asCheck > 0){break}
+          asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
+          if(asCheck > 0){break} # If a next index is found come out of the while loop
+        
+            } # End of the while loop
+        
+        # Storing the final dag in the dag storer
+        
+        dagStore[j,1] <- recDag
+        
+      } # End of Inner for loop looping over the length of indexes
+    
+    
+    } # End of the second if Loop for looping over the matching index
+    
+    } # End of the first if loop for aspectMatch
+        
+     return(dagStore)   
+  
+} # End of the function
+
+```
+
+      
+   
+      
+      
+      
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      
+      
+    
+```{r}
+
+recScanner(cleantxtSplit,"food")
+
+```
 
 
 

@@ -121,90 +121,26 @@ for(i in 1: sentLength){
   
   ############################### DAG Extraction Layer ######################
   
-  # length of DAG text
+  # Getting polarity of each aspect
   
-  dagLen <- length(cleantxtSplit)
-  
-  # Checking if there are any intersecting items from food Dictionary
-  
-  foodMatch <- intersect(cleantxtSplit,foodDict)
-  
-  # Find the index of the matching text
-  
-  if(length(foodMatch) > 0){
-    
-    matchId <- match(foodMatch,cleantxtSplit)
-    
-    # The result of the above is a list of index for matching words in the dictionary. If the match is found the index is listed there. Else we get only NA's 
-  
-  matchId <- matchId[!is.na(matchId)] # This gets only the Non NA id's
-    
-    ########## Next start the recursive checking for sentiment from the sentiment dictionary #####
-  
-  if(length(matchId) > 0){  
-    
-    indLen <- length(matchId) # Find the total number of indexes where the dictionary is matching
-    
-    for(j in 1:indLen){
-      
-      tempInd <- matchId[j] # Getting the first index
-      
-      # Now starting a while index so that the index recursively passess through the DAG
-      
-      tempInd <- tempInd + 1 # Incrementing the index number so that it starts comparing with the next word onward
-      
-      recDag <- "N" # Initializing a neutral polarity
-      
-      while(tempInd <= dagLen){
-        
-        # Finding the polarity recursively
-        
-        if(length(intersect(cleantxtSplit[tempInd],postDic)) > 0){recPost <- "P"}else     if(length(intersect(cleantxtSplit[tempInd],negDic)) > 0){recDag <- "Ne" }else{recPost <- "N"}
-        
-        
-        # Below is to find the new polarity of the Dag
-        
-        if(recPost == "P" & recDag == "N"){recDag <- "P"}else if(recPost == "Ne" & recDag == "N"){recDag <- "Ne"}else if(recPost == "N" & recDag == "N"){recDag <- "N"}else if(recPost == "P" & recDag == "P"){recDag <- "P"}else if(recPost == "Ne" & recDag == "P" ){recDag == "Ne"}else if(recPost == "N" & recDag == "P"){recDag <- "P"}else{recDag == "Ne"}
-        
-        tempInd <- tempInd + 1 # Incrementing the tempInd inside the loop
-        
-        # Checking if we have reached any other aspect
-        
-        asCheck <- length(intersect(cleantxtSplit[tempInd],ambDict))
-        if(asCheck > 0){break}
-        asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
-        if(asCheck > 0){break}
-        asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
-        if(asCheck > 0){break} # If a next index is found come out of the while loop
-        
-      } # End of the while loop
-      
-      
-    } # End of Inner for loop looping over the length of indexes
-    
-    
-    
-    
-    } # End of the second if Loop for looping over the matching index
-    
-    } # End of the first if loop for foodMatch
-  
-  
-  ################## $$$$$$$$$$$$$$$
-  
-  # At this point, enter the overall sentiment of the food search
-  
-  
-  
-  
+  foodPolarity <- recScanner(cleantxtSplit,"food") 
+  ambPolarity <- recScanner(cleantxtSplit,"ambience")
+  serPolarity <- recScanner(cleantxtSplit,"service")
+  pricePolarity <- recScanner(cleantxtSplit,"price")
   
 } # End of the first for loop
 
 
 
 ```
+# JMJPFU
+### 15-May-2017
+
+1. Created a function for the aspect - sentiment search and the DAG updater
+
 # Tomorrow
 
-1. Create a function for the aspect - sentiment search and the DAG updater
+1. Create a polarity changing words like (no, not, never). Applying before any negative or positive words changes its polarity
+
 2. Update the DAG score in a data frame. Based on the number of positive words create a feature for the update
 3. Create DAG updater for all sentiments
