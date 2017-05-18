@@ -61,6 +61,10 @@ postDic <- c("consistent","good","fun","fast","consistently")
 
 negDic <- c("bad","nonsense","no","exorbitant")
 
+# Creating a polarity changing dictionary
+
+polDic <- c("no","not","never")
+
 
 ```
 
@@ -123,10 +127,21 @@ for(i in 1: sentLength){
   
   # Getting polarity of each aspect
   
-  foodPolarity <- recScanner(cleantxtSplit,"food") 
-  ambPolarity <- recScanner(cleantxtSplit,"ambience")
-  serPolarity <- recScanner(cleantxtSplit,"service")
-  pricePolarity <- recScanner(cleantxtSplit,"price")
+  foodPolarity <- recScanner(cleantxtSplit,"food")$dagStore 
+  foodPos <- recScanner(cleantxtSplit,"food")$PCount
+  foodNeg <- recScanner(cleantxtSplit,"food")$Ncount
+  
+  ambPolarity <- recScanner(cleantxtSplit,"ambience")$dagStore
+  ambPos <- recScanner(cleantxtSplit,"ambience")$PCount
+  ambNeg <- recScanner(cleantxtSplit,"ambience")$Ncount
+  
+  serPolarity <- recScanner(cleantxtSplit,"service")$dagStore
+  serPos <- recScanner(cleantxtSplit,"service")$PCount
+  serNeg <- recScanner(cleantxtSplit,"service")$Ncount
+  
+  pricePolarity <- recScanner(cleantxtSplit,"price")$dagStore
+  pricePos <- recScanner(cleantxtSplit,"price")$PCount
+  priceNeg <- recScanner(cleantxtSplit,"price")$Ncount
   
 } # End of the first for loop
 
@@ -138,9 +153,13 @@ for(i in 1: sentLength){
 
 1. Created a function for the aspect - sentiment search and the DAG updater
 
+# JMJPFU
+### 18-May-2017
+
+1. Created a polarity changing words like (no, not, never). Applying before any negative or positive words changes its polarity
+2. Created a counter of polarity words
+
 # Tomorrow
 
-1. Create a polarity changing words like (no, not, never). Applying before any negative or positive words changes its polarity
-
-2. Update the DAG score in a data frame. Based on the number of positive words create a feature for the update
-3. Create DAG updater for all sentiments
+1. The number of negative words needs a re-look. The count is not working properly
+2. Create DAG updater for all sentiments
