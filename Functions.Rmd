@@ -210,35 +210,66 @@ recScanner <- function(cleantxtSplit,aspect){
         
         tempInd <- matchId[j] + 1
         
-        # Initializing a neutral polarity as default to the Dag polarity tagger
+        # Initializing a neutral polarity as default to the Dag polarity tagger. In addition initializing positive          counter and also negative counter
         
         recDag <- "N" 
+        Pcou <- 0
+        Ncou <- 0
         
         # Now starting a while index so that the index recursively passess through the DAG
         
         while(tempInd <= dagLen){
           
+          
+          
           # Finding the polarity recursively for the relevant word in the text
           
-          if(length(intersect(cleantxtSplit[tempInd],postDic)) > 0){recPost <- "P"}else if(length(intersect(cleantxtSplit[tempInd],negDic)) > 0){recDag <- "Ne" }else{recPost <- "N"}
+          if(length(intersect(cleantxtSplit[tempInd],postDic)) > 0){recPost <- "P"}else if(length(intersect(cleantxtSplit[tempInd],negDic)) > 0){recPost <- "Ne" }else if(length(intersect(cleantxtSplit[tempInd],polDic)) > 0){recPost <- "Pc"}else{recPost <- "N"}
   
           # Based on the polarity of the word the DAG is updated for polarity
         
-        if(recPost == "P" & recDag == "N"){recDag <- "P"}else if(recPost == "Ne" & recDag == "N"){recDag <- "Ne"}else if(recPost == "N" & recDag == "N"){recDag <- "N"}else if(recPost == "P" & recDag == "P"){recDag <- "P"}else if(recPost == "Ne" & recDag == "P" ){recDag == "Ne"}else if(recPost == "N" & recDag == "P"){recDag <- "P"}else{recDag == "Ne"}
+        if(recPost == "P" & recDag == "N"){recDag <- "P";Pcou <- Pcou + 1}else if(recPost == "Ne" & recDag == "N"){recDag <- "Ne";Ncou <- Ncou + 1}else if(recPost == "N" & recDag == "N"){recDag <- "N"}else if(recPost == "P" & recDag == "P"){recDag <- "P";Pcou <- Pcou + 1}else if(recPost == "Ne" & recDag == "P" ){recDag == "Ne";Ncou <- Ncou + 1}else if(recPost == "N" & recDag == "P"){recDag <- "P"}else if(recPost == "P" & recDag == "Pc"){recDag <- "Ne";Ncou <- Ncou + 1}else if(recPost == "Ne" & recDag == "Pc"){recDag <- "P";Pcou <- Pcou + 1}else if(recPost == "N" & recDag == "Pc"){recDag <- "N"}else if(recPost == "Pc"){recDag <- "Pc"}else{recDag == "Ne"}
           
           # Incrementing the tempInd inside the loop
           
           tempInd <- tempInd + 1 
           
           # Checking if we have reached any other aspect. This section needs to be updated based on the new aspects             which will get introduced
-        
+        if(aspect == "food"){
+          
           asCheck <- length(intersect(cleantxtSplit[tempInd],ambDict))
           if(asCheck > 0){break}
           asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
           if(asCheck > 0){break}
           asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
           if(asCheck > 0){break} # If a next index is found come out of the while loop
-        
+          
+        }else if(aspect == "ambience"){
+          
+          asCheck <- length(intersect(cleantxtSplit[tempInd],foodDict))
+          if(asCheck > 0){break}
+          asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
+          if(asCheck > 0){break}
+          asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
+          if(asCheck > 0){break} # If a next index is found come out of the while loop
+          
+        }else if(aspect == "service"){
+          
+          asCheck <- length(intersect(cleantxtSplit[tempInd],foodDict))
+          if(asCheck > 0){break}
+          asCheck <- length(intersect(cleantxtSplit[tempInd],ambDict))
+          if(asCheck > 0){break}
+          asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
+          if(asCheck > 0){break}
+        }else if(aspect == "price"){
+          
+          asCheck <- length(intersect(cleantxtSplit[tempInd],foodDict))
+          if(asCheck > 0){break}
+          asCheck <- length(intersect(cleantxtSplit[tempInd],ambDict))
+          if(asCheck > 0){break}
+          asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
+          if(asCheck > 0){break}
+        }
             } # End of the while loop
         
         # Storing the final dag in the dag storer
@@ -250,9 +281,18 @@ recScanner <- function(cleantxtSplit,aspect){
     
     } # End of the second if Loop for looping over the matching index
     
+    list(dagStore = dagStore,PCount = Pcou,Ncount = Ncou)
+    
+    }else{
+      
+      dagStore[1,1] <- NA
+     
+      list(dagStore = dagStore,PCount = 0,Ncount = 0) 
+      
     } # End of the first if loop for aspectMatch
         
-     return(dagStore)   
+    
+  
   
 } # End of the function
 

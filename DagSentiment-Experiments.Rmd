@@ -37,6 +37,8 @@ foodDict <- append(foodDict,c("dishes","icecream","fish"))
 
 foodDict <- unlist(foodDict)
 
+foodDict <- c(foodDict,"chicken")
+
 ########## Aspect Dictionary : Ambience
 
 ambDict <- c("ambience","atmosphere")
@@ -50,16 +52,18 @@ serDict <- c("service","waiter")
 pricDict <- c("price","pricing","cost","expense")
 
 ```
+,
+
 
 ### Creating sentiment dictionaries
 
 ```{r}
 # Creating a positive dictionary
-postDic <- c("consistent","good","fun","fast","consistently")
+postDic <- c("consistent","good","fun","fast","consistently","interesting","authentic","wonderful","tasty")
 
 # Creating a negative dictionary
 
-negDic <- c("bad","nonsense","no","exorbitant")
+negDic <- c("bad","nonsense","exorbitant")
 
 # Creating a polarity changing dictionary
 
@@ -111,7 +115,7 @@ for(i in 1: sentLength){
   
  # Getting back the clean text
   
-  textClean <- textCorp1[[1]]$content
+  textClean <- textCorp[[1]]$content
   
   textClean <- stripWhitespace(textClean)
   
@@ -125,26 +129,39 @@ for(i in 1: sentLength){
   
   ############################### DAG Extraction Layer ######################
   
+  # Creating a data frame to store the polarity scores
+  
+  polFeatDf <- data.frame(matrix(nrow=0,ncol=12))
+  
+  names(polFeatDf) <- c("food_pol","food_pos","food_neg","amb_pol","amb_pos","amb_neg","ser_pol","ser_pos","ser_neg","pri_pol","pri_pos","pri_neg")
+  
   # Getting polarity of each aspect
   
-  foodPolarity <- recScanner(cleantxtSplit,"food")$dagStore 
-  foodPos <- recScanner(cleantxtSplit,"food")$PCount
-  foodNeg <- recScanner(cleantxtSplit,"food")$Ncount
+  polFeatDf[1,1] <- recScanner(cleantxtSplit,"food")$dagStore 
+  polFeatDf[1,2] <- recScanner(cleantxtSplit,"food")$PCount/length(cleantxtSplit)
+  polFeatDf[1,3] <- recScanner(cleantxtSplit,"food")$Ncount/length(cleantxtSplit)
   
-  ambPolarity <- recScanner(cleantxtSplit,"ambience")$dagStore
-  ambPos <- recScanner(cleantxtSplit,"ambience")$PCount
-  ambNeg <- recScanner(cleantxtSplit,"ambience")$Ncount
+  polFeatDf[1,4] <- recScanner(cleantxtSplit,"ambience")$dagStore
+  polFeatDf[1,5] <- recScanner(cleantxtSplit,"ambience")$PCount/length(cleantxtSplit)
+  polFeatDf[1,6] <- recScanner(cleantxtSplit,"ambience")$Ncount/length(cleantxtSplit)
   
-  serPolarity <- recScanner(cleantxtSplit,"service")$dagStore
-  serPos <- recScanner(cleantxtSplit,"service")$PCount
-  serNeg <- recScanner(cleantxtSplit,"service")$Ncount
+  polFeatDf[1,7] <- recScanner(cleantxtSplit,"service")$dagStore
+  polFeatDf[1,8] <- recScanner(cleantxtSplit,"service")$PCount/length(cleantxtSplit)
+  polFeatDf[1,9] <- recScanner(cleantxtSplit,"service")$Ncount/length(cleantxtSplit)
   
-  pricePolarity <- recScanner(cleantxtSplit,"price")$dagStore
-  pricePos <- recScanner(cleantxtSplit,"price")$PCount
-  priceNeg <- recScanner(cleantxtSplit,"price")$Ncount
+  polFeatDf[1,10] <- recScanner(cleantxtSplit,"price")$dagStore
+  polFeatDf[1,11] <- recScanner(cleantxtSplit,"price")$PCount/length(cleantxtSplit)
+  polFeatDf[1,12] <- recScanner(cleantxtSplit,"price")$Ncount/length(cleantxtSplit)
   
 } # End of the first for loop
 
+# Combining the sentence polarity to a consolidating data frame
+
+combPolDf <- data.frame(matrix(nrow=0,ncol=12))
+names(combPolDf) <- c("food_pol","food_pos","food_neg","amb_pol","amb_pos","amb_neg","ser_pol","ser_pos","ser_neg","pri_pol","pri_pos","pri_neg")
+
+
+combPolDf <- rbind(combPolDf,polFeatDf)
 
 
 ```
@@ -159,7 +176,449 @@ for(i in 1: sentLength){
 1. Created a polarity changing words like (no, not, never). Applying before any negative or positive words changes its polarity
 2. Created a counter of polarity words
 
+# JMJPFU
+### 20-May-2017
+
+1.Negative words were worked out and the counts were corrected
+2. Create DAG updater for all sentiments : Dag updater data frame was created and updated. However need to work on a graph formulae with metadata attached.
+
+```{r}
+# Created some more examples along with the text
+
+cleantxtSplit <- c(cleantxtSplit,"chicken","wonderful","tasty")
+```
+
+
+
+```{r}
+
+recScanner <- function(cleantxtSplit,aspect){
+  
+  # CleantxtSplit : This is the text which needs to be recursively scanned
+  # aspect : This is a charachter which is checked to find out the right aspect
+  # foodDict : This is the dictionary if the aspect is food
+  ### Body of the function ###
+  
+  dagLen <- length(cleantxtSplit) # Find the length of the text to be recursively scanned
+  
+  # Checking if there are any intersecting items from respective aspect Dictionary
+  
+  ## change : foodMatch => aspectMatch
+  
+  # Doing a intersect to find the matching words in the passed text with the dictionary
+  
+  if(aspect == "food"){aspectMatch <- intersect(cleantxtSplit,foodDict)  
+  
+  
+  }else if(aspect == "ambience" ){aspectMatch <- intersect(cleantxtSplit,ambDict)}else if(aspect == "service"){aspectMatch <- intersect(cleantxtSplit,serDict) }else if(aspect == "price"){aspectMatch <- intersect(cleantxtSplit,pricDict)}
+    
+  # Find the index of the matching text
+  
+  if(length(aspectMatch) > 0){  
+    
+    # Find the index of the aspect in the original text.The result of the below is a list of index for matching           words in the dictionary. If the match is found the index is listed there. Else we get only NA's 
+    
+    matchId <- match(aspectMatch,cleantxtSplit)
+    
+    # The below code is to get only the Non NA id's
+    
+    matchId <- matchId[!is.na(matchId)] 
+  
+    ########## Next start the recursive checking for sentiment from the sentiment dictionary #####
+    
+    if(length(matchId) > 0){ 
+      
+      # Find the total number of indexes where the dictionary is matching
+      
+      indLen <- length(matchId)
+      
+      # Start a for loop to recursively start another scanning of text from the index of matching aspect in the text
+  
+      for(j in 1:indLen){
+        
+        # Start a empty data frame to store the DAGs for each index
+        
+        dagStore <- list()
+        
+        # Getting the first index and Incrementing the index number so that it starts comparing with the next word            onward
+        
+        tempInd <- matchId[j] + 1
+        
+        # Initializing a neutral polarity as default to the Dag polarity tagger. In addition initializing positive          counter and also negative counter
+        
+        recDag <- "N" 
+        Pcou <- 0
+        Ncou <- 0
+        
+        # Now starting a while index so that the index recursively passess through the DAG
+        
+        while(tempInd <= dagLen){
+          ## Defining the empty stores
+          entity <- c() # Only one ID equivalent to aspect
+          polarity <- c() # Can have multiple polarities
+          positive <- c() # Ids of the positive words used in dictionary
+          negative <- c() # Ids of the negative words used in dictionary
+          competitor <- c() # Ids referring to competitor
+          polChanger <- c() # Polarity changing words
+          pcPos <- c() # Polarity changed positive
+          pcNeg <- c() # Polarity changed negative
+          
+          
+          # Finding the polarity recursively for the relevant word in the text
+          
+          if(length(intersect(cleantxtSplit[tempInd],postDic)) > 0){
+            recPost <- "P"
+          }else if(length(intersect(cleantxtSplit[tempInd],negDic)) > 0){
+            recPost <- "Ne" 
+          }else if(length(intersect(cleantxtSplit[tempInd],polDic)) > 0){
+            recPost <- "Pc"
+          }else{recPost <- "N"}
+  
+          # Based on the polarity of the word the DAG is updated for polarity
+        
+        if(recPost == "P" & recDag == "N"){
+          recDag <- "P"
+          Pcou <- Pcou + 1 # incrementing the counter by one
+          tempPos <- match(intersect(cleantxtSplit[tempInd],postDic),postDic ) # Adding the index of positive in a            temporary container
+          positive <- c(positive,tempPos) # collecting the positive counts 
+          
+        }else if(recPost == "Ne" & recDag == "N"){
+          
+          recDag <- "Ne"
+          Ncou <- Ncou + 1
+          tempNeg <- match(intersect(cleantxtSplit[tempInd],negDic),negDic ) # Adding index of Negative words
+          negative <- c(negative,tempNeg) # Collecting negative words
+          
+          
+        }else if(recPost == "N" & recDag == "N"){recDag <- "N"}else if(recPost == "P" & recDag == "P"){
+            recDag <- "P"
+            Pcou <- Pcou + 1
+            tempPos <- match(intersect(cleantxtSplit[tempInd],postDic),postDic ) # Adding the index of positive in a             temporary container
+            positive <- c(positive,tempPos) # collecting the positive counts 
+            
+        }else if(recPost == "Ne" & recDag == "P" ){
+          recDag == "Ne"
+          Ncou <- Ncou + 1
+          tempNeg <- match(intersect(cleantxtSplit[tempInd],negDic),negDic ) # Adding index of Negative words
+          negative <- c(negative,tempNeg) # Collecting negative words
+          
+        }else if(recPost == "N" & recDag == "P"){
+          
+          recDag <- "P" # No counter update for positive as the counter was already update earlier
+          
+        }else if(recPost == "P" & recDag == "Pc"){
+          
+          recDag <- "Ne"
+          Ncou <- Ncou + 1
+          tempPos <- match(intersect(cleantxtSplit[tempInd],postDic),postDic ) # Adding the index of positive in a             temporary container
+          pcPos <- c(pcPos,tempPos) # collecting the polarity changed positive counts 
+          
+        }else if(recPost == "Ne" & recDag == "Pc"){
+          
+          recDag <- "P"
+          Pcou <- Pcou + 1
+          tempNeg <- match(intersect(cleantxtSplit[tempInd],negDic),negDic ) # Adding index of Negative words
+          pcNeg <- c(pcNeg,tempNeg) # Collecting polarity changed negative words
+          
+        }else if(recPost == "N" & recDag == "Pc"){recDag <- "N"}else if(recPost == "Pc"){
+          
+          recDag <- "Pc"
+          tempPc <- match(intersect(cleantxtSplit[tempInd],polDic),polDic )
+          polChanger <- c(polChanger,tempPc) # collecting ids of polarity changed words
+          
+        }else{
+          recDag == "Ne"
+          tempNeg <- match(intersect(cleantxtSplit[tempInd],negDic),negDic ) # Adding index of Negative words
+          negative <- c(negative,tempNeg) # Collecting negative words
+          
+        }
+          
+          # Incrementing the tempInd inside the loop
+          
+          tempInd <- tempInd + 1 
+          
+          # Checking if we have reached any other aspect. This section needs to be updated based on the new aspects             which will get introduced
+        if(aspect == "food"){
+          
+          asCheck <- length(intersect(cleantxtSplit[tempInd],ambDict))
+          if(asCheck > 0){
+            
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],foodDict),foodDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            
+            break
+            }
+          asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
+          if(asCheck > 0){
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],foodDict),foodDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            
+            break
+            }
+          asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
+          if(asCheck > 0){
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],foodDict),foodDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            
+            break
+            
+            } # If a next index is found come out of the while loop
+          
+        }else if(aspect == "ambience"){
+          
+          asCheck <- length(intersect(cleantxtSplit[tempInd],foodDict))
+          if(asCheck > 0){
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],ambDict),ambDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            
+            break
+            
+            }
+          asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
+          if(asCheck > 0){
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],ambDict),ambDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            
+            break
+            }
+          asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
+          if(asCheck > 0){
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],ambDict),ambDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            
+            break
+            } # If a next index is found come out of the while loop
+          
+        }else if(aspect == "service"){
+          
+          asCheck <- length(intersect(cleantxtSplit[tempInd],foodDict))
+          if(asCheck > 0){
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],serDict),serDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            
+            break
+            
+            }
+          asCheck <- length(intersect(cleantxtSplit[tempInd],ambDict))
+          if(asCheck > 0){
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],serDict),serDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            break
+            }
+          asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
+          if(asCheck > 0){
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],serDict),serDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            break
+            }
+        }else if(aspect == "price"){
+          
+          asCheck <- length(intersect(cleantxtSplit[tempInd],foodDict))
+          if(asCheck > 0){
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],pricDict),pricDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            break
+            }
+          asCheck <- length(intersect(cleantxtSplit[tempInd],ambDict))
+          if(asCheck > 0){
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],pricDict),pricDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            break
+            }
+          asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
+          if(asCheck > 0){
+            # Storing the value of the entity
+            entityId <- match(intersect(cleantxtSplit[matchId[j]],pricDict),pricDict)
+            entity <- c(entity,entityId)
+            # Storing the value of the polarity
+            
+            polarity <- c(polarity,recDag)
+            
+            # Joining together all the metadata
+            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            
+            break
+            
+            }
+        } # End of the Price check loop
+          
+          
+            } # End of the while loop
+        
+        # Storing the final dag in the dag storer
+        
+        
+        dagStore[[length(dagStore)+1]] <- entList
+        
+      } # End of Inner for loop looping over the length of indexes
+      
+    
+    
+    } # End of the second if Loop for looping over the matching index
+    
+    list(dagStore = dagStore,PCount = Pcou,Ncount = Ncou)
+    
+    }else{
+      
+      dagStore
+     
+      list(dagStore = dagStore,PCount = 0,Ncount = 0) 
+      
+    } # End of the first if loop for aspectMatch
+        
+    
+  
+  
+} # End of the function
+
+
+
+
+```
+# JMJPFU
+### 21-May-2017
+
+```{r}
+# Defining the first level
+Food <- list()
+# Defining the second hierarchy
+
+Food[['entity']] <- list()
+
+Food[['NeutralCount']] <- list()
+
+Food[['PositiveIds']] <- list()
+
+Food[['NegativeIds']] <- list()
+
+Food[['Polarity']] <- list()
+
+# Loading data into the lists
+
+Food$entity <- c("chicken")
+
+## Methods to append to an existing list hierarchy
+
+Food$entity <- c(Food$entity,"Omlette")
+
+Food$entity <- append(Food$entity,"Leamon")
+
+### Trying to get a third hierarchy
+
+Food$entity$sentiments <- c(1,2,3)
+
+Food$entity <- append(Food$entity,"Boneless Wings")
+
+
+
+```
+
+Trying out adding two lists together
+
+```{r}
+Temp <- Food
+
+Temp <- append(Temp,Food)
+
+## Checking adding new items to list
+
+Temp$NeutralCount <- c(1,4,5)
+
+## Trying another 
+```
+
+# JMJPFU
+### 23-May-2017
+
+Method for list coersing
+
+```{r}
+myList <- list()
+
+myList[[length(myList) + 1]] <- Food
+```
+
+```{r}
+testList <- recScanner(cleantxtSplit,"food")$dagStore 
+```
+
 # Tomorrow
 
-1. The number of negative words needs a re-look. The count is not working properly
-2. Create DAG updater for all sentiments
+1. Check the new dag function again. The results are not as expected
