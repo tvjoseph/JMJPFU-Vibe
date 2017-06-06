@@ -233,12 +233,13 @@ recScanner <- function(cleantxtSplit,aspect){
       indLen <- length(matchId)
       
       # Start a for loop to recursively start another scanning of text from the index of matching aspect in the text
-  
+      
+      # Start a empty data frame to store the DAGs for each index
+      
+      dagStore <- list()
+      
       for(j in 1:indLen){
         
-        # Start a empty data frame to store the DAGs for each index
-        
-        dagStore <- list()
         
         # Getting the first index and Incrementing the index number so that it starts comparing with the next word            onward
         
@@ -351,7 +352,8 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            dagStore[[length(dagStore)+1]] <- entList
             
             break
             }
@@ -365,7 +367,9 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc = polChanger,pcpos = pcPos,pcneg = pcNeg)
+            
+            dagStore[[length(dagStore)+1]] <- entList
             
             break
             }
@@ -379,7 +383,9 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            
+            dagStore[[length(dagStore)+1]] <- entList
             
             break
             
@@ -397,7 +403,9 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            
+            dagStore[[length(dagStore)+1]] <- entList
             
             break
             
@@ -412,7 +420,9 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            
+            dagStore[[length(dagStore)+1]] <- entList
             
             break
             }
@@ -426,7 +436,9 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            
+            dagStore[[length(dagStore)+1]] <- entList
             
             break
             } # If a next index is found come out of the while loop
@@ -443,7 +455,9 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            
+            dagStore[[length(dagStore)+1]] <- entList
             
             break
             
@@ -458,7 +472,10 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            
+            dagStore[[length(dagStore)+1]] <- entList
+            
             break
             }
           asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
@@ -471,7 +488,10 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            
+            dagStore[[length(dagStore)+1]] <- entList
+            
             break
             }
         }else if(aspect == "price"){
@@ -486,7 +506,10 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            
+            dagStore[[length(dagStore)+1]] <- entList
+            
             break
             }
           asCheck <- length(intersect(cleantxtSplit[tempInd],ambDict))
@@ -499,7 +522,10 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            
+            dagStore[[length(dagStore)+1]] <- entList
+            
             break
             }
           asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
@@ -512,7 +538,9 @@ recScanner <- function(cleantxtSplit,aspect){
             polarity <- c(polarity,recDag)
             
             # Joining together all the metadata
-            entList <- c(entity,polarity,positive,negative,competitor,polChanger,pcPos,pcNeg)
+            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            
+            dagStore[[length(dagStore)+1]] <- entList
             
             break
             
@@ -520,12 +548,14 @@ recScanner <- function(cleantxtSplit,aspect){
         } # End of the Price check loop
           
           
+          
+          
             } # End of the while loop
         
         # Storing the final dag in the dag storer
         
-        
         dagStore[[length(dagStore)+1]] <- entList
+        
         
       } # End of Inner for loop looping over the length of indexes
       
@@ -616,9 +646,20 @@ myList[[length(myList) + 1]] <- Food
 ```
 
 ```{r}
-testList <- recScanner(cleantxtSplit,"food")$dagStore 
+testList <- recScanner(cleantxtSplit,"price")$dagStore 
+```
+
+# JMJPFU
+### 25-May-2017
+
+1. The Dag function was reworked. Most of the wrongs were corrected. however it is getting one more additional list. This needs to be corrected
+
+```{r}
+cleantxtSplit
+
+length(testList)
 ```
 
 # Tomorrow
-
-1. Check the new dag function again. The results are not as expected
+1. Some more corrections. All the aspects have an additional line included. Most probably because of the one after the while loop
+2. Negative and polarity changers are not been listed properly.
