@@ -1,0 +1,30 @@
+---
+title: "JMJPFU-DagSentiment-coreAlgorithm"
+output: html_notebook
+---
+
+# JMJPFU
+### 14-5-2017
+
+This is the core algorithm behind the Sentiment DAG. The core process is explained in the dagSentiment Process file
+
+### Initial tasks : Library Files
+
+```{r}
+library(rvest)
+library(dplyr)
+library(tm)
+library(ngram)
+library(stringr)
+library(wordcloud)
+```
+
+```{r}
+polarity <- c()
+
+polarity <- c(polarity,3,4)
+
+polarity
+
+```
+

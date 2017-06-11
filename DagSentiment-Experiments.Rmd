@@ -826,8 +826,9 @@ recScanner(cleantxtSplit,aspect)$dagStore
 Let us test with more text
 
 ```{r}
-i = 2
+i = 5
 textSamp <- textSplit[i]
+textSamp
 
 cleantxtSplit <- revClean(textSamp)
 cleantxtSplit
@@ -848,5 +849,7 @@ recScanner(cleantxtSplit,aspect)$dagStore
 ```
 ```{r}
 postDic
+textSamp
 ```
+
 

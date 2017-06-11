@@ -33,3 +33,67 @@ This entails the following
 8. Prediction to happen at two levels. One at document level to find the overall sentiment and then at the Aspect level to reveal the aspect sentiment.
 9. Connect the aspect to menu items and other details so that we are able to pip point exactly where the sentiment is pointed at. This also can be encoded as graphs.
 10. In terms of metadata collection for each store, menu , locations, names of people, name of restaurants, Competitors information ( including cooking at home) are all captured.
+
+
+# JMJPFU
+### 11-June-2017
+
+Let us now look at this from a process perspective.
+
+1. Take a whole document
+2. Find the number of sentences in the document
+3. For each document extract the features, aspect by aspect
+4. Consolidate all the aspect based sentiment DAG for a document
+5. Consolidate all DAGS for a document i.e consolidate the DAGS of each sentences
+6. Consolidate DAGS for all documents
+
+
+```{r}
+# Start first hierarchy
+# Starting a Hotel level DAG to consolidate all reviews for a hotel
+hotDag <- list()
+
+for(i in 1: nrow(Hotel_reviews)){
+  # Taking one document at a time
+  hotText <- Hotel_reviews[i,1] 
+  # Doing the split sentence by sentence
+  textSplit <- str_split(hotText,"[.]")
+  # Unlisting the split so that it is a list of sentences
+  textSplit <- unlist(textSplit)
+  # Finding the sentence length
+  sentLength <- length(textSplit)
+  # Initializing a Document level DAG Consolidator
+  docDag <- list()
+  for(j in 1: sentLength){
+    # Taking one sentence at a time
+    textSamp <- textSplit[j]
+    # Cleaning the sentence to get only the tokens
+    cleantxtSplit <- revClean(textSamp)
+    # Getting all the aspects together
+    aspect = c("food","service","price","ambience")
+    # Initiating a sentence DAG consolidatory
+    sentDag <- list()
+    for(k in aspect){
+      # Getting the DAG for each aspect and storing in the sentence DAG consolidator
+      sentDag[[length(sentDag)+1]] <- recScanner(cleantxtSplit,k)$dagStore
+      
+    } # End of loop which goes over each aspect within a sentence
+
+    docDag[[length(docDag)+1]] <- sentDag
+    
+  } # End of the hierarchy at each sentence level
+  
+ hotDag[[length(hotDag)+1]] <- docDag
+  
+} # End of the Hierarchy at the Hotel level
+
+
+
+
+
+```
+# Tomorrow
+
+The process side has a problem. If an aspect is as the last word, then the enList is found to be not working and there is an error.
+
+Case : i = 6 , j = 12 , k = food
