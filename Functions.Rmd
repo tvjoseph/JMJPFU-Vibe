@@ -298,7 +298,46 @@ recScanner <- function(cleantxtSplit,aspect){
 
 ```
 
-      
+# JMJPFU
+### 11-June-2017
+
+Let us make a new function to clean the reviews
+
+```{r}
+
+revClean <- function(textSamp){
+  
+ # Let us clean up the text
+  
+  textSamp <- cleansamp(textSamp)
+  
+  # Converting to a corpus
+  
+  textCorp <- Corpus(VectorSource(textSamp))
+  
+  # Let us remove the stop words
+  
+  textCorp <- tm_map(textCorp,removeWords,c("the","was","i","at","a","when","is","and","has","for","of","are","to","an","it","in","be","if","on","since","as","had","so","he","him","me","her","she","its","that","its","been","he","there"))
+  
+  textCorp <- tm_map(textCorp,stripWhitespace)
+  
+ # Getting back the clean text
+  
+  textClean <- textCorp[[1]]$content
+  
+  textClean <- stripWhitespace(textClean)
+  
+ # Split the text again based on the spaces 
+  
+  cleantxtSplit <- str_split(textClean," ")
+  
+  # Unlisting the text again
+  
+  cleantxtSplit <- unlist(cleantxtSplit)
+  
+}
+```
+
    
       
       

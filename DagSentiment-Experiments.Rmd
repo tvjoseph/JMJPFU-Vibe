@@ -236,10 +236,11 @@ recScanner <- function(cleantxtSplit,aspect){
       
       # Start a empty data frame to store the DAGs for each index
       
-      dagStore <- list()
+       dagStore <- list() # Experimenting by brining this dag to line 243
       
       for(j in 1:indLen){
         
+        #dagStore <- list()
         
         # Getting the first index and Incrementing the index number so that it starts comparing with the next word            onward
         
@@ -250,6 +251,12 @@ recScanner <- function(cleantxtSplit,aspect){
         recDag <- "N" 
         Pcou <- 0
         Ncou <- 0
+        negCol <- c() # Negative terms consolidator
+        posCol <- c() # positive terms consolidator
+        comCol <- c() # Competitor terms consolidator
+        polCol <- c() # polarity changer consolidator
+        pcpolCol <- c() # polarity changing positive words consolidator
+        pcnegCol <- c() # polarity changing negative words consolidator
         
         # Now starting a while index so that the index recursively passess through the DAG
         
@@ -291,7 +298,10 @@ recScanner <- function(cleantxtSplit,aspect){
           negative <- c(negative,tempNeg) # Collecting negative words
           
           
-        }else if(recPost == "N" & recDag == "N"){recDag <- "N"}else if(recPost == "P" & recDag == "P"){
+        }else if(recPost == "N" & recDag == "N"){
+          recDag <- "N"
+          
+        }else if(recPost == "P" & recDag == "P"){
             recDag <- "P"
             Pcou <- Pcou + 1
             tempPos <- match(intersect(cleantxtSplit[tempInd],postDic),postDic ) # Adding the index of positive in a             temporary container
@@ -345,214 +355,342 @@ recScanner <- function(cleantxtSplit,aspect){
           if(asCheck > 0){
             
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],foodDict),foodDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],foodDict),foodDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],foodDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
-            dagStore[[length(dagStore)+1]] <- entList
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
+            
+            #dagStore[[length(dagStore)+1]] <- entList
             
             break
-            }
+          }
           asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
           if(asCheck > 0){
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],foodDict),foodDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],foodDict),foodDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],foodDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc = polChanger,pcpos = pcPos,pcneg = pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
             
-            dagStore[[length(dagStore)+1]] <- entList
+            #dagStore[[length(dagStore)+1]] <- entList
             
             break
-            }
+          }
           asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
           if(asCheck > 0){
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],foodDict),foodDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],foodDict),foodDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],foodDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
             
-            dagStore[[length(dagStore)+1]] <- entList
+            #dagStore[[length(dagStore)+1]] <- entList
+            
             
             break
-            
-            } # If a next index is found come out of the while loop
+            # If a next index is found come out of the while loop
+          }
+          #entityId <- match(intersect(cleantxtSplit[matchId[j]],foodDict),foodDict)
+          entityId <- intersect(cleantxtSplit[matchId[j]],foodDict)
+          entity <- c(entity,entityId)
+          posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg) 
           
         }else if(aspect == "ambience"){
           
           asCheck <- length(intersect(cleantxtSplit[tempInd],foodDict))
           if(asCheck > 0){
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],ambDict),ambDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],ambDict),ambDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],ambDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
             
-            dagStore[[length(dagStore)+1]] <- entList
+            #dagStore[[length(dagStore)+1]] <- entList
             
             break
             
-            }
+          }
           asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
           if(asCheck > 0){
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],ambDict),ambDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],ambDict),ambDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],ambDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
             
-            dagStore[[length(dagStore)+1]] <- entList
+            #dagStore[[length(dagStore)+1]] <- entList
             
             break
-            }
+          }
           asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
           if(asCheck > 0){
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],ambDict),ambDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],ambDict),ambDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],ambDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
             
-            dagStore[[length(dagStore)+1]] <- entList
+            #dagStore[[length(dagStore)+1]] <- entList
             
             break
-            } # If a next index is found come out of the while loop
+          } # If a next index is found come out of the while loop
+          
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],ambDict),ambDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],ambDict)
+            entity <- c(entity,entityId)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg) 
           
         }else if(aspect == "service"){
           
           asCheck <- length(intersect(cleantxtSplit[tempInd],foodDict))
           if(asCheck > 0){
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],serDict),serDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],serDict),serDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],serDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
             
-            dagStore[[length(dagStore)+1]] <- entList
+            #dagStore[[length(dagStore)+1]] <- entList
             
             break
             
-            }
+          }
           asCheck <- length(intersect(cleantxtSplit[tempInd],ambDict))
           if(asCheck > 0){
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],serDict),serDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],serDict),serDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],serDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
             
-            dagStore[[length(dagStore)+1]] <- entList
+            #dagStore[[length(dagStore)+1]] <- entList
             
             break
-            }
+          }
           asCheck <- length(intersect(cleantxtSplit[tempInd],pricDict))
           if(asCheck > 0){
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],serDict),serDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],serDict),serDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],serDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
             
-            dagStore[[length(dagStore)+1]] <- entList
+            #dagStore[[length(dagStore)+1]] <- entList
             
             break
-            }
+          }
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],serDict),serDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],serDict)
+            entity <- c(entity,entityId)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg) 
+            
+            
         }else if(aspect == "price"){
           
           asCheck <- length(intersect(cleantxtSplit[tempInd],foodDict))
           if(asCheck > 0){
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],pricDict),pricDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],pricDict),pricDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],pricDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
             
-            dagStore[[length(dagStore)+1]] <- entList
+            #dagStore[[length(dagStore)+1]] <- entList
             
             break
-            }
+          }
           asCheck <- length(intersect(cleantxtSplit[tempInd],ambDict))
           if(asCheck > 0){
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],pricDict),pricDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],pricDict),pricDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],pricDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
             
-            dagStore[[length(dagStore)+1]] <- entList
+            #dagStore[[length(dagStore)+1]] <- entList
             
             break
-            }
+          }
           asCheck <- length(intersect(cleantxtSplit[tempInd],serDict))
           if(asCheck > 0){
             # Storing the value of the entity
-            entityId <- match(intersect(cleantxtSplit[matchId[j]],pricDict),pricDict)
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],pricDict),pricDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],pricDict)
             entity <- c(entity,entityId)
             # Storing the value of the polarity
             
             polarity <- c(polarity,recDag)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
             # Joining together all the metadata
-            entList <- entList <- list(ent = entity,pola = polarity,pos = positive,neg =negative,comp = competitor,polc =     polChanger,pcpos = pcPos,pcneg = pcNeg)
+            entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
             
-            dagStore[[length(dagStore)+1]] <- entList
+            #dagStore[[length(dagStore)+1]] <- entList
             
             break
+          }
+            #entityId <- match(intersect(cleantxtSplit[matchId[j]],pricDict),pricDict)
+            entityId <- intersect(cleantxtSplit[matchId[j]],pricDict)
+            entity <- c(entity,entityId)
+            posCol <- c(posCol,positive)
+            negCol <- c(negCol,negative)
+            comCol <- c(comCol,competitor)
+            polCol <- c(polCol,polChanger)
+            pcpolCol <- c(pcpolCol,pcPos)
+            pcnegCol <- c(pcnegCol,pcNeg)
             
-            }
+            
         } # End of the Price check loop
           
           
-          
+        
+        entList <- list(ent = entity,pola = polarity,pos = posCol,neg = negCol,comp = comCol,polc =     polCol,pcpos = pcpolCol,pcneg = pcnegCol)
           
             } # End of the while loop
         
         # Storing the final dag in the dag storer
+        
         
         dagStore[[length(dagStore)+1]] <- entList
         
@@ -646,7 +784,9 @@ myList[[length(myList) + 1]] <- Food
 ```
 
 ```{r}
-testList <- recScanner(cleantxtSplit,"price")$dagStore 
+testList <- recScanner(cleantxtSplit,"food")$dagStore 
+
+
 ```
 
 # JMJPFU
@@ -655,11 +795,58 @@ testList <- recScanner(cleantxtSplit,"price")$dagStore
 1. The Dag function was reworked. Most of the wrongs were corrected. however it is getting one more additional list. This needs to be corrected
 
 ```{r}
+aspect = "food"
+#aspect = "service"
+#aspect = "price"
+#aspect = "ambience"
+
 cleantxtSplit
 
+testList <- recScanner(cleantxtSplit,aspect)$dagStore 
+
 length(testList)
+
+
+
+recScanner(cleantxtSplit,aspect)$dagStore 
 ```
 
-# Tomorrow
+# JMJPFU
+### 10-June-2017
 1. Some more corrections. All the aspects have an additional line included. Most probably because of the one after the while loop
 2. Negative and polarity changers are not been listed properly.
+
+# JMJPFU
+### 11-June-2017
+
+1. Try experimenting by moving dag listing in line number 243 - Not required
+2. The experiment with removing the daglist inside the ascheck worked
+3. However the entity name needs to be looked at in the final output - Changed into actual entity rather than the index
+
+Let us test with more text
+
+```{r}
+i = 2
+textSamp <- textSplit[i]
+
+cleantxtSplit <- revClean(textSamp)
+cleantxtSplit
+
+aspect = "food"
+#aspect = "service"
+#aspect = "price"
+#aspect = "ambience"
+
+testList <- recScanner(cleantxtSplit,aspect)$dagStore 
+
+length(testList)
+
+recScanner(cleantxtSplit,aspect)$dagStore 
+
+
+
+```
+```{r}
+postDic
+```
+
